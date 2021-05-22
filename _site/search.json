@@ -1,0 +1,20 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this blog",
+      "description": "Some additional details about the blog",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2021-05-22T17:47:51+08:00"
+    },
+    {
+      "path": "index.html",
+      "title": "DataViz Blog",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2021-05-22T17:47:52+08:00"
+    }
+  ],
+  "collections": ["posts/posts.json"]
+}
