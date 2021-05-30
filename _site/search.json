@@ -3,17 +3,17 @@
     {
       "path": "about.html",
       "title": "About this blog",
-      "description": "Some additional details about the blog",
+      "description": "This is a blog to record my school project work",
       "author": [],
       "contents": "\n\n\n\n",
       "last_modified": "2021-05-22T17:47:51+08:00"
     },
     {
       "path": "index.html",
-      "title": "DataViz Blog",
+      "title": "DataViz_XZ",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-05-22T17:47:52+08:00"
+      "last_modified": "2021-05-30T20:30:30+08:00"
     }
   ],
   "collections": ["posts/posts.json"]

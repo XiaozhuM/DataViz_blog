@@ -1,7 +1,7 @@
 ---
 title: "Welcome to DataViz Blog"
 description: |
-  this is a test
+  Hi!Welcome to my page :)
 author:
   - name: Xiaozhu Mao 
     email: xiaozhu.mao.2020@mitb.smu.edu.sg
