@@ -3,10 +3,9 @@ title: "Welcome to DataViz Blog"
 description: |
   this is a test
 author:
-  - name: Nora Jones 
-    url: https://example.com/norajones
-    affiliation: Spacely Sprockets
-    affiliation_url: https://example.com/spacelysprokets
+  - name: Xiaozhu Mao 
+    email: xiaozhu.mao.2020@mitb.smu.edu.sg
+    affiliation: Singapore Management University
 date: 05-22-2021
 output:
   distill::distill_article:
