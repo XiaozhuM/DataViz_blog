@@ -180,7 +180,7 @@ Click on label->Edit label. Change the color to blue for exportPerc and red for 
 ![alt text](Image/60.png)  
 ![alt text](Image/61.png)   
 3. Adjust the position and the final view of the dashboard is as below:  
-![alt text](Image/dashboardFinal.png){width=100%}  
+![alt text](Image/interactive dashboard.png){width=100%}  
 
 ## 4. Observation  
 * From 2011 to 2020, Hong Kong remained to be the top net exporter. The trading amount has increased overall in the past 10 years and the percentage of export remained at around 92%. This is probably due to the fact that Hong Kong is also a trading hub. There is hence a large amount of merchandise traded with Hong Kong.  
