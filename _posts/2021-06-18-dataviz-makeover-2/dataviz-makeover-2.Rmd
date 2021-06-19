@@ -48,7 +48,7 @@ States since 2006” cannot be visualized in the graph. As the visualization is 
 * It is now an interactive visualization. Viewer can select the year from 2011 to 2020 to see the top N countries/regions by total trade value. Alternatively, user can play to see the trend of change with time.  
 
 ### Final interactive visualization    
-The visualization can be found [here](https://public.tableau.com/app/profile/xiaozhu.mao/viz/DataViz_assign2/Dashboard1) in Tableau Public.  
+The visualization can be found [here](https://public.tableau.com/app/profile/xiaozhu.mao/viz/DataViz_assign2/interactivedashboard) in Tableau Public.  
 
 ## 3. Preparing the visualization with Tableau
 ### 1) Preparation and import 
