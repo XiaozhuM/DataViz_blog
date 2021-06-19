@@ -1,7 +1,7 @@
 ---
-title: "dataviz-makeover-2"
+title: "Dataviz Makeover 2"
 description: |
-  Redesigning data visualization assignment for ISSS608-Visual Analytics
+  Redesigning data visualization assignment for ISSS608-Visual Analytics - interactive
 author:
   - name: Xiaozhu Mao
     email: xiaozhu.mao.2020@mitb.smu.edu.sg
