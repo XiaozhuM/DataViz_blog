@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2021-07-03-assignmentmc1/",
+    "title": "Assignment_MC1",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Xiaozhu Mao",
+        "url": {}
+      }
+    ],
+    "date": "2021-07-03",
+    "categories": [],
+    "contents": "\nThe packages will be used in the assignment.\n\n\n\nget the list of articels in all paper sources\n\n\n\niteratively load in each article and save into a list of dataframes\n\n\n\nbind all dataframes in the list\n\n\n\ncheck data types\n\nRows: 845\nColumns: 8\n$ news_no   <chr> \"121\", \"135\", \"152\", \"154\", \"237\", \"251\", \"341\", …\n$ SOURCE    <chr> \"All News Today\", \"All News Today\", \"All News Tod…\n$ TITLE     <chr> \"POK PROTESTS END IN ARRESTS\", \"RALLY SCHEDULED I…\n$ PUBLISHED <chr> \"2005/04/06\", \"2012/04/09\", \"1993/02/02\", \"1998/0…\n$ LOCATION  <chr> \"ELODIS, Kronos\", \"ABILA, Kronos\", \"ABILA, Kronos…\n$ TEXT      <chr> \"Fifteen members of the Protectors of Kronos (POK…\n$ AUTHOR    <chr> NA, NA, NA, \"Petrus Gerhard\", NA, NA, NA, NA, NA,…\n$ NOTE      <chr> NA, NA, NA, \"This article is the first in a serie…\n\nconvert “published” to datetime, it is currently a character and format all to unify the format\n\n\n\nchange column name and adjust column order in order to load to corpus\n\n\n\nload to corpus\n\n\n\nchange all to lower case except case number\nfurther clean the data\n\n\n\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-07-05T17:28:35+08:00",
+    "input_file": "assignmentmc1.knit.md"
+  },
+  {
     "path": "posts/2021-06-18-dataviz-makeover-2/",
     "title": "Dataviz Makeover 2",
     "description": "Redesigning data visualization assignment for ISSS608-Visual Analytics - interactive",

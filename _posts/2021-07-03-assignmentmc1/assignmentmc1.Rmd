@@ -1,0 +1,244 @@
+---
+title: "Assignment_MC1"
+description: |
+  A short description of the post.
+author:
+  - name: Xiaozhu Mao
+    url: {}
+date: 07-03-2021
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_float: true
+draft: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
+```  
+
+#### Loading in packages 
+
+The packages will be used in the assignment. 
+
+```{r tidy=TRUE}
+packages = c('stringr', 'tidyr','plyr','tidyverse', 'tm', 'lubridate', 
+             'corporaexplorer', 'quanteda','quanteda.textstats', "visNetwork", "networkD3")
+for (p in packages){
+  if(!require(p, character.only = T)){
+  install.packages(p)
+  }
+library(p,character.only = T)
+}
+```  
+
+#### Loading in data  
+1. get the list of articles in all paper sources  
+
+```{r warning=FALSE}
+list_of_paper <- list.files(path = "MC1/News Articles", recursive = TRUE,
+                            pattern = ".", 
+                            full.names = TRUE)
+```    
+
+2. iteratively load in each article and save into a list of dataframes 
+
+```{r warning=FALSE, tidy=TRUE}
+df_list <- list()
+num <- 1
+for (i in list_of_paper){
+  temp <- lapply(i, readLines)
+
+  temp <- lapply(1:length(temp),
+                   function(j) data.frame(
+                          news_no=str_extract(i, "(?<=\\/)\\d+"),
+                          rawdata=temp[[j]],
+                          stringsAsFactors = FALSE))
+                   
+  df_temp <- do.call(rbind, temp)
+  df_temp[,c("type","entry")] <- str_trim(str_split_fixed(df_temp$rawdata,":",2))
+  
+  df_temp <- df_temp[,c("news_no","type","entry")]
+  df_temp <- pivot_wider(df_temp, names_from = type, values_from = entry)
+
+  df_list[[num]] <- df_temp
+  num <- num+1
+}
+```     
+
+3. bind all dataframes in the list  
+
+```{r}
+df <- do.call(rbind.fill,df_list)
+```
+
+#### Data cleaning and pre-processing  
+
+1. check data types  
+
+```{r echo=TRUE}
+glimpse(df)
+```  
+
+convert "published" to datetime, it is currently a character and format all to unify the format  
+
+```{r warning=FALSE}
+formats <- c("%d %B %Y","%d%B %Y","%B %d, %Y","%Y/%m%d")
+df <-df %>%
+  mutate(date = parse_date_time(PUBLISHED, formats))
+``` 
+
+convert Doc_id to int
+
+```{r}
+df$news_no <- as.integer(df$news_no)
+```
+
+convert date to date format
+
+```{r}
+df$date <- as.Date(as.POSIXct(df$date,tz="GMT"))
+```
+
+change column name and adjust column order in order to load to corpus  
+
+```{r}
+colnames(df) <- c("Doc_id","Source","Title","Published","Location","Text","Author","Note","date")
+df_corpus <- df[,c("Doc_id","Text","Source","Title","Author","date","Location","Note")]
+```  
+
+use quanteda to load corpus and clean the corpus by removing stopwords and punctuations. Calculate cosine similarity between each pair of document and convert to a dataframe. 
+
+```{r warning=FALSE}
+news_corpus <- corpus(df_corpus, docid_field="Doc_id", text_field="Text")
+clean_corpus <- dfm(news_corpus, remove=stopwords("english"), remove_punct=TRUE)
+sim <- textstat_simil(clean_corpus, margin="document", method="cosine")
+sim_df <- as.data.frame(sim)
+```
+
+change document1 and document2 to integer
+
+```{r}
+sim_df$document1 <- as.integer(as.character(sim_df$document1))
+sim_df$document2 <- as.integer(as.character(sim_df$document2))
+```
+
+create a table of source for merging later
+
+```{r}
+df_source <- df_corpus %>%
+  select(Doc_id,Source,date) 
+```
+
+swap doc1 and doc2 id to make doc1 date always earlier than doc2 date. add rowid as pair_id, split to 200 bins as ranking based on cosine, highest cosine value indicates highest rank, and highest similarity
+
+```{r}
+sim_tmp <- sim_df %>%
+  rowid_to_column(var="pair_id") %>%
+  mutate(rank=ntile(cosine,200)) %>%
+  filter(rank==200) %>%
+  left_join(df_source, by=c("document1"="Doc_id"), suffix=c("1","2")) %>%
+  left_join(df_source, by=c("document2"="Doc_id"), suffix=c("1","2")) %>%
+  filter(Source1 != Source2) %>%
+  filter(date1 != date2) %>%
+  transform(document1=ifelse(date1<=date2, document1, document2),
+            document2=ifelse(date1<=date2, document2, document1)) %>%
+  transform(Source1=ifelse(date1<=date2, Source1, Source2),
+            Source2=ifelse(date1<=date2, Source2, Source1))
+```
+
+since doc 1 is published earlier than doc2, here we assume doc1 is primary news and the matching doc2 is the secondary news. Count the number of primary and secondary news in each news source and label them as primary or secondary.
+
+```{r echo=TRUE}
+df_primary <- sim_tmp %>%
+  filter(rank==200) %>%
+  left_join(df_source, by=c("document1"="Doc_id"), suffix=c("1","2")) %>%
+  left_join(df_source, by=c("document2"="Doc_id"), suffix=c("1","2")) %>%
+  group_by(Source1) %>%
+  count(document1) %>%
+  mutate(role="primary") 
+
+df_secondary <- sim_tmp %>%
+  filter(rank==200) %>%
+  left_join(df_source, by=c("document1"="Doc_id"), suffix=c("1","2")) %>%
+  left_join(df_source, by=c("document2"="Doc_id"), suffix=c("1","2")) %>%
+  group_by(Source2) %>%
+  count(document2) %>%
+  mutate(role="secondary") 
+
+df_join <- df_corpus %>%
+  left_join(df_primary, by=c("Doc_id"="document1"), suffix=c("_pri","_sec")) %>%
+  left_join(df_secondary, by=c("Doc_id"="document2"), suffix=c("_pri","_sec")) %>%
+  select(-Source1,-Source2) %>%
+  unite("role", n_pri, role_pri, n_sec, role_sec, sep="_",na.rm=TRUE)
+
+glimpse(df_join)
+```
+create nodes list and edges list for visualizing dependancies network between sources
+
+```{r warning=FALSE}
+sim_nodes <- df_source %>%
+  distinct(Source) %>%
+  rename(label=Source) %>%
+  rowid_to_column("id")
+
+sim_edges <- sim_tmp %>%
+  group_by(Source1, Source2) %>%
+  summarise(weight=n()) %>%
+  left_join(sim_nodes, by=c("Source1"="label")) %>%
+  rename(from=id) %>%
+  left_join(sim_nodes, by=c("Source2"="label")) %>%
+  rename(to=id) %>%
+  ungroup() %>%
+  select(from, to, weight)
+```
+
+visualize dependancies between sources in a network graph
+
+```{r echo=TRUE, warning=FALSE}
+visNetwork(sim_nodes, sim_edges) %>%
+  visEdges(arrows = 'middle') %>%
+  visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
+  visIgraphLayout(layout="layout_in_circle")
+
+```
+
+
+#### stopped here
+use corporaexplore to visualiza all primary and secondary sources.
+
+```{r eval=FALSE, warning=FALSE, include=TRUE}
+dashboard <- prepare_data(
+  dataset = df_join,
+  date_based_corpus = FALSE,
+  columns_doc_info=c("Doc_id","Title","Author", "date", "Location"),
+  grouping_variable = "Source")
+
+saveRDS(dashboard, "/dashboard/corpus_dashboard.rds", compress = FALSE)
+```
+
+```{r echo=FALSE, eval=FALSE, include=TRUE}
+library(rsconnect)
+rsconnect::deployApp('/Users/xiaozhumao/XiaozhuM/DataViz_blog/_posts/2021-07-03-assignmentmc1/dashboard')
+```
+
+click [here](https://xiaozhumao.shinyapps.io/dashboard/) to view the shiny app
+
+<iframe src=" https://xiaozhumao.shinyapps.io/dashboard/"
+        style="border: 1px solid black; width: 100%; height: 500px;">
+        </iframe>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
