@@ -207,20 +207,7 @@ visNetwork(sim_nodes, sim_edges) %>%
 #### stopped here
 use corporaexplore to visualiza all primary and secondary sources.
 
-```{r eval=FALSE, warning=FALSE, include=TRUE}
-dashboard <- prepare_data(
-  dataset = df_join,
-  date_based_corpus = FALSE,
-  columns_doc_info=c("Doc_id","Title","Author", "date", "Location"),
-  grouping_variable = "Source")
 
-saveRDS(dashboard, "/dashboard/corpus_dashboard.rds", compress = FALSE)
-```
-
-```{r echo=FALSE, eval=FALSE, include=TRUE}
-library(rsconnect)
-rsconnect::deployApp('/Users/xiaozhumao/XiaozhuM/DataViz_blog/_posts/2021-07-03-assignmentmc1/dashboard')
-```
 
 click [here](https://xiaozhumao.shinyapps.io/dashboard/) to view the shiny app
 

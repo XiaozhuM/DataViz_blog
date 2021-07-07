@@ -132,7 +132,7 @@ sim_dashboard <- prepare_data(
 )
 
 
-```{r echo=FALSE, warning=FALSE}
+```{r eval=FALSE, warning=FALSE, include=TRUE}
 dashboard <- prepare_data(
   dataset = df_join,
   date_based_corpus = FALSE,
@@ -142,11 +142,13 @@ dashboard <- prepare_data(
 saveRDS(dashboard, "/dashboard/corpus_dashboard.rds", compress = FALSE)
 ```
 
-```{r echo=FALSE, warning=FALSE, eval=FALSE}
-shinyAppFile(
-  "/Users/xiaozhumao/XiaozhuM/DataViz_blog/_posts/2021-07-03-assignmentmc1/dashboard/app.R",
-  options = list(width = "100%", height = 700)
-)
+```{r echo=FALSE, eval=FALSE, include=TRUE}
+library(rsconnect)
+rsconnect::deployApp('/Users/xiaozhumao/XiaozhuM/DataViz_blog/_posts/2021-07-03-assignmentmc1/dashboard')
 ```
+
+<iframe src=" https://xiaozhumao.shinyapps.io/dashboard/"
+style="border: 1px solid black; width: 100%; height: 500px;">
+  </iframe>
 
 
