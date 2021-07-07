@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #20794d; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #20794d; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+<title>DataViz Blog: Assignment_MC1</title>
+
+<meta property="description" itemprop="description" content="A short description of the post."/>
+
+
+<!--  https://schema.org/Article -->
+<meta property="article:published" itemprop="datePublished" content="2021-07-03"/>
+<meta property="article:created" itemprop="dateCreated" content="2021-07-03"/>
+<meta name="article:author" content="Xiaozhu Mao"/>
+
+<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+<meta property="og:title" content="DataViz Blog: Assignment_MC1"/>
+<meta property="og:type" content="article"/>
+<meta property="og:description" content="A short description of the post."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:site_name" content="DataViz Blog"/>
+
+<!--  https://dev.twitter.com/cards/types/summary -->
+<meta property="twitter:card" content="summary"/>
+<meta property="twitter:title" content="DataViz Blog: Assignment_MC1"/>
+<meta property="twitter:description" content="A short description of the post."/>
+
+<!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+<script type="text/json" id="radix-rmarkdown-metadata">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","draft"]}},"value":[{"type":"character","attributes":{},"value":["Assignment_MC1"]},{"type":"character","attributes":{},"value":["A short description of the post."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Xiaozhu Mao"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["07-03-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"logical","attributes":{},"value":[false]}]}
+</script>
+<!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["assignmentmc1_files/anchor-4.2.2/anchor.min.js","assignmentmc1_files/bowser-1.9.3/bowser.min.js","assignmentmc1_files/distill-2.2.21/template.v2.js","assignmentmc1_files/htmlwidgets-1.5.3/htmlwidgets.js","assignmentmc1_files/jquery-1.11.3/jquery.min.js","assignmentmc1_files/popper-2.6.0/popper.min.js","assignmentmc1_files/tippy-6.2.7/tippy-bundle.umd.min.js","assignmentmc1_files/tippy-6.2.7/tippy-light-border.css","assignmentmc1_files/tippy-6.2.7/tippy.css","assignmentmc1_files/tippy-6.2.7/tippy.umd.min.js","assignmentmc1_files/vis-4.20.1/img/network/acceptDeleteIcon.png","assignmentmc1_files/vis-4.20.1/img/network/addNodeIcon.png","assignmentmc1_files/vis-4.20.1/img/network/backIcon.png","assignmentmc1_files/vis-4.20.1/img/network/connectIcon.png","assignmentmc1_files/vis-4.20.1/img/network/cross.png","assignmentmc1_files/vis-4.20.1/img/network/cross2.png","assignmentmc1_files/vis-4.20.1/img/network/deleteIcon.png","assignmentmc1_files/vis-4.20.1/img/network/downArrow.png","assignmentmc1_files/vis-4.20.1/img/network/editIcon.png","assignmentmc1_files/vis-4.20.1/img/network/leftArrow.png","assignmentmc1_files/vis-4.20.1/img/network/minus.png","assignmentmc1_files/vis-4.20.1/img/network/plus.png","assignmentmc1_files/vis-4.20.1/img/network/rightArrow.png","assignmentmc1_files/vis-4.20.1/img/network/upArrow.png","assignmentmc1_files/vis-4.20.1/img/network/zoomExtends.png","assignmentmc1_files/vis-4.20.1/vis.css","assignmentmc1_files/vis-4.20.1/vis.min.js","assignmentmc1_files/visNetwork-binding-2.0.9/visNetwork.js","assignmentmc1_files/webcomponents-2.0.0/webcomponents.js","dashboard/app.R","dashboard/corpus_dashboard.rds","dashboard/rsconnect/shinyapps.io/xiaozhumao/dashboard.dcf","MC1/A Map of Kronos.jpg","MC1/AnswerSheet/VAST Challenge 2021 MC1 Answer Sheet_files/colorschememapping.xml","MC1/AnswerSheet/VAST Challenge 2021 MC1 Answer Sheet_files/filelist.xml","MC1/AnswerSheet/VAST Challenge 2021 MC1 Answer Sheet_files/themedata.thmx","MC1/AnswerSheet/VAST Challenge 2021 MC1 Answer Sheet.htm","MC1/email headers.csv","MC1/EmployeeRecords.xlsx","MC1/FACTBOOK-Kronos.docx","MC1/FACTBOOK-Tethys.docx","MC1/GAStechKronos-org-chart.pdf","MC1/HistoricalDocuments/10 year historical document clean.docx","MC1/HistoricalDocuments/5 year report clean.docx","MC1/News Articles/All News Today/121.txt","MC1/News Articles/All News Today/135.txt","MC1/News Articles/All News Today/152.txt","MC1/News Articles/All News Today/154.txt","MC1/News Articles/All News Today/237.txt","MC1/News Articles/All News Today/251.txt","MC1/News Articles/All News Today/341.txt","MC1/News Articles/All News Today/391.txt","MC1/News Articles/All News Today/420.txt","MC1/News Articles/All News Today/554.txt","MC1/News Articles/All News Today/603.txt","MC1/News Articles/All News Today/612.txt","MC1/News Articles/All News Today/617.txt","MC1/News Articles/All News Today/683.txt","MC1/News Articles/All News Today/698.txt","MC1/News Articles/All News Today/714.txt","MC1/News Articles/All News Today/753.txt","MC1/News Articles/All News Today/77.txt","MC1/News Articles/Athena Speaks/138.txt","MC1/News Articles/Athena Speaks/140.txt","MC1/News Articles/Athena Speaks/141.txt","MC1/News Articles/Athena Speaks/160.txt","MC1/News Articles/Athena Speaks/191.txt","MC1/News Articles/Athena Speaks/202.txt","MC1/News Articles/Athena Speaks/220.txt","MC1/News Articles/Athena Speaks/231.txt","MC1/News Articles/Athena Speaks/255.txt","MC1/News Articles/Athena Speaks/270.txt","MC1/News Articles/Athena Speaks/295.txt","MC1/News Articles/Athena Speaks/354.txt","MC1/News Articles/Athena Speaks/383.txt","MC1/News Articles/Athena Speaks/405.txt","MC1/News Articles/Athena Speaks/433.txt","MC1/News Articles/Athena Speaks/466.txt","MC1/News Articles/Athena Speaks/48.txt","MC1/News Articles/Athena Speaks/516.txt","MC1/News Articles/Athena Speaks/519.txt","MC1/News Articles/Athena Speaks/601.txt","MC1/News Articles/Athena Speaks/610.txt","MC1/News Articles/Athena Speaks/615.txt","MC1/News Articles/Athena Speaks/64.txt","MC1/News Articles/Athena Speaks/652.txt","MC1/News Articles/Athena Speaks/74.txt","MC1/News Articles/Central Bulletin/113.txt","MC1/News Articles/Central Bulletin/123.txt","MC1/News Articles/Central Bulletin/125.txt","MC1/News Articles/Central Bulletin/136.txt","MC1/News Articles/Central Bulletin/151.txt","MC1/News Articles/Central Bulletin/170.txt","MC1/News Articles/Central Bulletin/213.txt","MC1/News Articles/Central Bulletin/244.txt","MC1/News Articles/Central Bulletin/34.txt","MC1/News Articles/Central Bulletin/37.txt","MC1/News Articles/Central Bulletin/401.txt","MC1/News Articles/Central Bulletin/403.txt","MC1/News Articles/Central Bulletin/565.txt","MC1/News Articles/Central Bulletin/578.txt","MC1/News Articles/Central Bulletin/604.txt","MC1/News Articles/Central Bulletin/618.txt","MC1/News Articles/Central Bulletin/673.txt","MC1/News Articles/Central Bulletin/734.txt","MC1/News Articles/Central Bulletin/745.txt","MC1/News Articles/Central Bulletin/798.txt","MC1/News Articles/Central Bulletin/800.txt","MC1/News Articles/Centrum Sentinel/118.txt","MC1/News Articles/Centrum Sentinel/13.txt","MC1/News Articles/Centrum Sentinel/142.txt","MC1/News Articles/Centrum Sentinel/15.txt","MC1/News Articles/Centrum Sentinel/199.txt","MC1/News Articles/Centrum Sentinel/203.txt","MC1/News Articles/Centrum Sentinel/208.txt","MC1/News Articles/Centrum Sentinel/232.txt","MC1/News Articles/Centrum Sentinel/280.txt","MC1/News Articles/Centrum Sentinel/299.txt","MC1/News Articles/Centrum Sentinel/308.txt","MC1/News Articles/Centrum Sentinel/320.txt","MC1/News Articles/Centrum Sentinel/325.txt","MC1/News Articles/Centrum Sentinel/386.txt","MC1/News Articles/Centrum Sentinel/418.txt","MC1/News Articles/Centrum Sentinel/434.txt","MC1/News Articles/Centrum Sentinel/485.txt","MC1/News Articles/Centrum Sentinel/486.txt","MC1/News Articles/Centrum Sentinel/490.txt","MC1/News Articles/Centrum Sentinel/521.txt","MC1/News Articles/Centrum Sentinel/551.txt","MC1/News Articles/Centrum Sentinel/56.txt","MC1/News Articles/Centrum Sentinel/562.txt","MC1/News Articles/Centrum Sentinel/597.txt","MC1/News Articles/Centrum Sentinel/624.txt","MC1/News Articles/Centrum Sentinel/649.txt","MC1/News Articles/Centrum Sentinel/655.txt","MC1/News Articles/Centrum Sentinel/665.txt","MC1/News Articles/Centrum Sentinel/708.txt","MC1/News Articles/Centrum Sentinel/717.txt","MC1/News Articles/Centrum Sentinel/749.txt","MC1/News Articles/Centrum Sentinel/793.txt","MC1/News Articles/Centrum Sentinel/817.txt","MC1/News Articles/Centrum Sentinel/828.txt","MC1/News Articles/Centrum Sentinel/841.txt","MC1/News Articles/Centrum Sentinel/844.txt","MC1/News Articles/Daily Pegasus/101.txt","MC1/News Articles/Daily Pegasus/115.txt","MC1/News Articles/Daily Pegasus/157.txt","MC1/News Articles/Daily Pegasus/175.txt","MC1/News Articles/Daily Pegasus/182.txt","MC1/News Articles/Daily Pegasus/22.txt","MC1/News Articles/Daily Pegasus/257.txt","MC1/News Articles/Daily Pegasus/264.txt","MC1/News Articles/Daily Pegasus/269.txt","MC1/News Articles/Daily Pegasus/272.txt","MC1/News Articles/Daily Pegasus/317.txt","MC1/News Articles/Daily Pegasus/465.txt","MC1/News Articles/Daily Pegasus/482.txt","MC1/News Articles/Daily Pegasus/51.txt","MC1/News Articles/Daily Pegasus/55.txt","MC1/News Articles/Daily Pegasus/568.txt","MC1/News Articles/Daily Pegasus/572.txt","MC1/News Articles/Daily Pegasus/602.txt","MC1/News Articles/Daily Pegasus/628.txt","MC1/News Articles/Daily Pegasus/647.txt","MC1/News Articles/Daily Pegasus/700.txt","MC1/News Articles/Daily Pegasus/72.txt","MC1/News Articles/Daily Pegasus/748.txt","MC1/News Articles/Daily Pegasus/760.txt","MC1/News Articles/Daily Pegasus/773.txt","MC1/News Articles/Daily Pegasus/791.txt","MC1/News Articles/Everyday News/147.txt","MC1/News Articles/Everyday News/2.txt","MC1/News Articles/Everyday News/200.txt","MC1/News Articles/Everyday News/201.txt","MC1/News Articles/Everyday News/214.txt","MC1/News Articles/Everyday News/234.txt","MC1/News Articles/Everyday News/332.txt","MC1/News Articles/Everyday News/343.txt","MC1/News Articles/Everyday News/387.txt","MC1/News Articles/Everyday News/460.txt","MC1/News Articles/Everyday News/496.txt","MC1/News Articles/Everyday News/608.txt","MC1/News Articles/Everyday News/656.txt","MC1/News Articles/Everyday News/80.txt","MC1/News Articles/Everyday News/93.txt","MC1/News Articles/Homeland Illumination/10.txt","MC1/News Articles/Homeland Illumination/110.txt","MC1/News Articles/Homeland Illumination/128.txt","MC1/News Articles/Homeland Illumination/134.txt","MC1/News Articles/Homeland Illumination/144.txt","MC1/News Articles/Homeland Illumination/161.txt","MC1/News Articles/Homeland Illumination/172.txt","MC1/News Articles/Homeland Illumination/18.txt","MC1/News Articles/Homeland Illumination/215.txt","MC1/News Articles/Homeland Illumination/221.txt","MC1/News Articles/Homeland Illumination/225.txt","MC1/News Articles/Homeland Illumination/254.txt","MC1/News Articles/Homeland Illumination/283.txt","MC1/News Articles/Homeland Illumination/290.txt","MC1/News Articles/Homeland Illumination/293.txt","MC1/News Articles/Homeland Illumination/294.txt","MC1/News Articles/Homeland Illumination/297.txt","MC1/News Articles/Homeland Illumination/313.txt","MC1/News Articles/Homeland Illumination/33.txt","MC1/News Articles/Homeland Illumination/348.txt","MC1/News Articles/Homeland Illumination/35.txt","MC1/News Articles/Homeland Illumination/350.txt","MC1/News Articles/Homeland Illumination/358.txt","MC1/News Articles/Homeland Illumination/366.txt","MC1/News Articles/Homeland Illumination/399.txt","MC1/News Articles/Homeland Illumination/407.txt","MC1/News Articles/Homeland Illumination/415.txt","MC1/News Articles/Homeland Illumination/426.txt","MC1/News Articles/Homeland Illumination/427.txt","MC1/News Articles/Homeland Illumination/437.txt","MC1/News Articles/Homeland Illumination/468.txt","MC1/News Articles/Homeland Illumination/470.txt","MC1/News Articles/Homeland Illumination/484.txt","MC1/News Articles/Homeland Illumination/502.txt","MC1/News Articles/Homeland Illumination/522.txt","MC1/News Articles/Homeland Illumination/537.txt","MC1/News Articles/Homeland Illumination/556.txt","MC1/News Articles/Homeland Illumination/563.txt","MC1/News Articles/Homeland Illumination/567.txt","MC1/News Articles/Homeland Illumination/579.txt","MC1/News Articles/Homeland Illumination/583.txt","MC1/News Articles/Homeland Illumination/592.txt","MC1/News Articles/Homeland Illumination/609.txt","MC1/News Articles/Homeland Illumination/616.txt","MC1/News Articles/Homeland Illumination/625.txt","MC1/News Articles/Homeland Illumination/627.txt","MC1/News Articles/Homeland Illumination/658.txt","MC1/News Articles/Homeland Illumination/669.txt","MC1/News Articles/Homeland Illumination/681.txt","MC1/News Articles/Homeland Illumination/684.txt","MC1/News Articles/Homeland Illumination/69.txt","MC1/News Articles/Homeland Illumination/697.txt","MC1/News Articles/Homeland Illumination/719.txt","MC1/News Articles/Homeland Illumination/73.txt","MC1/News Articles/Homeland Illumination/733.txt","MC1/News Articles/Homeland Illumination/737.txt","MC1/News Articles/Homeland Illumination/738.txt","MC1/News Articles/Homeland Illumination/743.txt","MC1/News Articles/Homeland Illumination/744.txt","MC1/News Articles/Homeland Illumination/770.txt","MC1/News Articles/Homeland Illumination/804.txt","MC1/News Articles/Homeland Illumination/842.txt","MC1/News Articles/Homeland Illumination/87.txt","MC1/News Articles/Homeland Illumination/94.txt","MC1/News Articles/International News/129.txt","MC1/News Articles/International News/226.txt","MC1/News Articles/International News/276.txt","MC1/News Articles/International News/29.txt","MC1/News Articles/International News/333.txt","MC1/News Articles/International News/374.txt","MC1/News Articles/International News/423.txt","MC1/News Articles/International News/436.txt","MC1/News Articles/International News/444.txt","MC1/News Articles/International News/499.txt","MC1/News Articles/International News/547.txt","MC1/News Articles/International News/636.txt","MC1/News Articles/International News/689.txt","MC1/News Articles/International News/742.txt","MC1/News Articles/International News/75.txt","MC1/News Articles/International News/767.txt","MC1/News Articles/International News/768.txt","MC1/News Articles/International News/821.txt","MC1/News Articles/International News/836.txt","MC1/News Articles/International News/89.txt","MC1/News Articles/International Times/150.txt","MC1/News Articles/International Times/167.txt","MC1/News Articles/International Times/238.txt","MC1/News Articles/International Times/24.txt","MC1/News Articles/International Times/282.txt","MC1/News Articles/International Times/287.txt","MC1/News Articles/International Times/347.txt","MC1/News Articles/International Times/443.txt","MC1/News Articles/International Times/506.txt","MC1/News Articles/International Times/514.txt","MC1/News Articles/International Times/550.txt","MC1/News Articles/International Times/638.txt","MC1/News Articles/International Times/651.txt","MC1/News Articles/International Times/751.txt","MC1/News Articles/Kronos Star/130.txt","MC1/News Articles/Kronos Star/163.txt","MC1/News Articles/Kronos Star/168.txt","MC1/News Articles/Kronos Star/174.txt","MC1/News Articles/Kronos Star/181.txt","MC1/News Articles/Kronos Star/246.txt","MC1/News Articles/Kronos Star/273.txt","MC1/News Articles/Kronos Star/28.txt","MC1/News Articles/Kronos Star/281.txt","MC1/News Articles/Kronos Star/289.txt","MC1/News Articles/Kronos Star/298.txt","MC1/News Articles/Kronos Star/306.txt","MC1/News Articles/Kronos Star/31.txt","MC1/News Articles/Kronos Star/321.txt","MC1/News Articles/Kronos Star/329.txt","MC1/News Articles/Kronos Star/339.txt","MC1/News Articles/Kronos Star/359.txt","MC1/News Articles/Kronos Star/364.txt","MC1/News Articles/Kronos Star/368.txt","MC1/News Articles/Kronos Star/376.txt","MC1/News Articles/Kronos Star/379.txt","MC1/News Articles/Kronos Star/38.txt","MC1/News Articles/Kronos Star/381.txt","MC1/News Articles/Kronos Star/39.txt","MC1/News Articles/Kronos Star/411.txt","MC1/News Articles/Kronos Star/42.txt","MC1/News Articles/Kronos Star/421.txt","MC1/News Articles/Kronos Star/435.txt","MC1/News Articles/Kronos Star/441.txt","MC1/News Articles/Kronos Star/461.txt","MC1/News Articles/Kronos Star/462.txt","MC1/News Articles/Kronos Star/481.txt","MC1/News Articles/Kronos Star/488.txt","MC1/News Articles/Kronos Star/495.txt","MC1/News Articles/Kronos Star/508.txt","MC1/News Articles/Kronos Star/518.txt","MC1/News Articles/Kronos Star/524.txt","MC1/News Articles/Kronos Star/526.txt","MC1/News Articles/Kronos Star/540.txt","MC1/News Articles/Kronos Star/541.txt","MC1/News Articles/Kronos Star/548.txt","MC1/News Articles/Kronos Star/569.txt","MC1/News Articles/Kronos Star/582.txt","MC1/News Articles/Kronos Star/623.txt","MC1/News Articles/Kronos Star/630.txt","MC1/News Articles/Kronos Star/637.txt","MC1/News Articles/Kronos Star/650.txt","MC1/News Articles/Kronos Star/666.txt","MC1/News Articles/Kronos Star/674.txt","MC1/News Articles/Kronos Star/678.txt","MC1/News Articles/Kronos Star/692.txt","MC1/News Articles/Kronos Star/693.txt","MC1/News Articles/Kronos Star/70.txt","MC1/News Articles/Kronos Star/710.txt","MC1/News Articles/Kronos Star/761.txt","MC1/News Articles/Kronos Star/763.txt","MC1/News Articles/Kronos Star/776.txt","MC1/News Articles/Kronos Star/781.txt","MC1/News Articles/Kronos Star/790.txt","MC1/News Articles/Kronos Star/820.txt","MC1/News Articles/Kronos Star/85.txt","MC1/News Articles/Kronos Star/9.txt","MC1/News Articles/Modern Rubicon/106.txt","MC1/News Articles/Modern Rubicon/133.txt","MC1/News Articles/Modern Rubicon/159.txt","MC1/News Articles/Modern Rubicon/171.txt","MC1/News Articles/Modern Rubicon/176.txt","MC1/News Articles/Modern Rubicon/21.txt","MC1/News Articles/Modern Rubicon/262.txt","MC1/News Articles/Modern Rubicon/30.txt","MC1/News Articles/Modern Rubicon/307.txt","MC1/News Articles/Modern Rubicon/355.txt","MC1/News Articles/Modern Rubicon/362.txt","MC1/News Articles/Modern Rubicon/365.txt","MC1/News Articles/Modern Rubicon/384.txt","MC1/News Articles/Modern Rubicon/412.txt","MC1/News Articles/Modern Rubicon/417.txt","MC1/News Articles/Modern Rubicon/425.txt","MC1/News Articles/Modern Rubicon/43.txt","MC1/News Articles/Modern Rubicon/452.txt","MC1/News Articles/Modern Rubicon/487.txt","MC1/News Articles/Modern Rubicon/642.txt","MC1/News Articles/Modern Rubicon/67.txt","MC1/News Articles/Modern Rubicon/727.txt","MC1/News Articles/Modern Rubicon/772.txt","MC1/News Articles/Modern Rubicon/783.txt","MC1/News Articles/Modern Rubicon/8.txt","MC1/News Articles/Modern Rubicon/811.txt","MC1/News Articles/Modern Rubicon/827.txt","MC1/News Articles/Modern Rubicon/830.txt","MC1/News Articles/Modern Rubicon/831.txt","MC1/News Articles/Modern Rubicon/99.txt","MC1/News Articles/News Desk/104.txt","MC1/News Articles/News Desk/146.txt","MC1/News Articles/News Desk/19.txt","MC1/News Articles/News Desk/190.txt","MC1/News Articles/News Desk/241.txt","MC1/News Articles/News Desk/259.txt","MC1/News Articles/News Desk/311.txt","MC1/News Articles/News Desk/402.txt","MC1/News Articles/News Desk/404.txt","MC1/News Articles/News Desk/464.txt","MC1/News Articles/News Desk/512.txt","MC1/News Articles/News Desk/525.txt","MC1/News Articles/News Desk/571.txt","MC1/News Articles/News Desk/588.txt","MC1/News Articles/News Desk/60.txt","MC1/News Articles/News Desk/605.txt","MC1/News Articles/News Desk/61.txt","MC1/News Articles/News Desk/644.txt","MC1/News Articles/News Desk/709.txt","MC1/News Articles/News Desk/721.txt","MC1/News Articles/News Desk/757.txt","MC1/News Articles/News Desk/801.txt","MC1/News Articles/News Desk/818.txt","MC1/News Articles/News Desk/839.txt","MC1/News Articles/News Desk/91.txt","MC1/News Articles/News Online Today/103.txt","MC1/News Articles/News Online Today/108.txt","MC1/News Articles/News Online Today/117.txt","MC1/News Articles/News Online Today/12.txt","MC1/News Articles/News Online Today/120.txt","MC1/News Articles/News Online Today/124.txt","MC1/News Articles/News Online Today/14.txt","MC1/News Articles/News Online Today/155.txt","MC1/News Articles/News Online Today/16.txt","MC1/News Articles/News Online Today/179.txt","MC1/News Articles/News Online Today/184.txt","MC1/News Articles/News Online Today/186.txt","MC1/News Articles/News Online Today/188.txt","MC1/News Articles/News Online Today/204.txt","MC1/News Articles/News Online Today/209.txt","MC1/News Articles/News Online Today/219.txt","MC1/News Articles/News Online Today/227.txt","MC1/News Articles/News Online Today/247.txt","MC1/News Articles/News Online Today/25.txt","MC1/News Articles/News Online Today/252.txt","MC1/News Articles/News Online Today/256.txt","MC1/News Articles/News Online Today/263.txt","MC1/News Articles/News Online Today/266.txt","MC1/News Articles/News Online Today/267.txt","MC1/News Articles/News Online Today/27.txt","MC1/News Articles/News Online Today/285.txt","MC1/News Articles/News Online Today/286.txt","MC1/News Articles/News Online Today/288.txt","MC1/News Articles/News Online Today/291.txt","MC1/News Articles/News Online Today/303.txt","MC1/News Articles/News Online Today/314.txt","MC1/News Articles/News Online Today/323.txt","MC1/News Articles/News Online Today/335.txt","MC1/News Articles/News Online Today/337.txt","MC1/News Articles/News Online Today/342.txt","MC1/News Articles/News Online Today/344.txt","MC1/News Articles/News Online Today/346.txt","MC1/News Articles/News Online Today/352.txt","MC1/News Articles/News Online Today/367.txt","MC1/News Articles/News Online Today/371.txt","MC1/News Articles/News Online Today/378.txt","MC1/News Articles/News Online Today/380.txt","MC1/News Articles/News Online Today/389.txt","MC1/News Articles/News Online Today/4.txt","MC1/News Articles/News Online Today/40.txt","MC1/News Articles/News Online Today/410.txt","MC1/News Articles/News Online Today/413.txt","MC1/News Articles/News Online Today/414.txt","MC1/News Articles/News Online Today/416.txt","MC1/News Articles/News Online Today/431.txt","MC1/News Articles/News Online Today/440.txt","MC1/News Articles/News Online Today/446.txt","MC1/News Articles/News Online Today/447.txt","MC1/News Articles/News Online Today/45.txt","MC1/News Articles/News Online Today/451.txt","MC1/News Articles/News Online Today/454.txt","MC1/News Articles/News Online Today/46.txt","MC1/News Articles/News Online Today/467.txt","MC1/News Articles/News Online Today/476.txt","MC1/News Articles/News Online Today/483.txt","MC1/News Articles/News Online Today/489.txt","MC1/News Articles/News Online Today/505.txt","MC1/News Articles/News Online Today/511.txt","MC1/News Articles/News Online Today/52.txt","MC1/News Articles/News Online Today/534.txt","MC1/News Articles/News Online Today/542.txt","MC1/News Articles/News Online Today/544.txt","MC1/News Articles/News Online Today/545.txt","MC1/News Articles/News Online Today/549.txt","MC1/News Articles/News Online Today/566.txt","MC1/News Articles/News Online Today/57.txt","MC1/News Articles/News Online Today/570.txt","MC1/News Articles/News Online Today/574.txt","MC1/News Articles/News Online Today/577.txt","MC1/News Articles/News Online Today/590.txt","MC1/News Articles/News Online Today/596.txt","MC1/News Articles/News Online Today/598.txt","MC1/News Articles/News Online Today/606.txt","MC1/News Articles/News Online Today/63.txt","MC1/News Articles/News Online Today/631.txt","MC1/News Articles/News Online Today/633.txt","MC1/News Articles/News Online Today/634.txt","MC1/News Articles/News Online Today/639.txt","MC1/News Articles/News Online Today/640.txt","MC1/News Articles/News Online Today/65.txt","MC1/News Articles/News Online Today/657.txt","MC1/News Articles/News Online Today/676.txt","MC1/News Articles/News Online Today/68.txt","MC1/News Articles/News Online Today/688.txt","MC1/News Articles/News Online Today/690.txt","MC1/News Articles/News Online Today/7.txt","MC1/News Articles/News Online Today/702.txt","MC1/News Articles/News Online Today/707.txt","MC1/News Articles/News Online Today/71.txt","MC1/News Articles/News Online Today/711.txt","MC1/News Articles/News Online Today/722.txt","MC1/News Articles/News Online Today/746.txt","MC1/News Articles/News Online Today/766.txt","MC1/News Articles/News Online Today/777.txt","MC1/News Articles/News Online Today/779.txt","MC1/News Articles/News Online Today/785.txt","MC1/News Articles/News Online Today/786.txt","MC1/News Articles/News Online Today/789.txt","MC1/News Articles/News Online Today/79.txt","MC1/News Articles/News Online Today/797.txt","MC1/News Articles/News Online Today/819.txt","MC1/News Articles/News Online Today/82.txt","MC1/News Articles/News Online Today/833.txt","MC1/News Articles/News Online Today/86.txt","MC1/News Articles/News Online Today/95.txt","MC1/News Articles/News Online Today/98.txt","MC1/News Articles/Tethys News/11.txt","MC1/News Articles/Tethys News/122.txt","MC1/News Articles/Tethys News/173.txt","MC1/News Articles/Tethys News/193.txt","MC1/News Articles/Tethys News/253.txt","MC1/News Articles/Tethys News/26.txt","MC1/News Articles/Tethys News/32.txt","MC1/News Articles/Tethys News/392.txt","MC1/News Articles/Tethys News/395.txt","MC1/News Articles/Tethys News/400.txt","MC1/News Articles/Tethys News/419.txt","MC1/News Articles/Tethys News/430.txt","MC1/News Articles/Tethys News/44.txt","MC1/News Articles/Tethys News/453.txt","MC1/News Articles/Tethys News/507.txt","MC1/News Articles/Tethys News/510.txt","MC1/News Articles/Tethys News/532.txt","MC1/News Articles/Tethys News/533.txt","MC1/News Articles/Tethys News/539.txt","MC1/News Articles/Tethys News/558.txt","MC1/News Articles/Tethys News/585.txt","MC1/News Articles/Tethys News/600.txt","MC1/News Articles/Tethys News/613.txt","MC1/News Articles/Tethys News/635.txt","MC1/News Articles/Tethys News/653.txt","MC1/News Articles/Tethys News/685.txt","MC1/News Articles/Tethys News/726.txt","MC1/News Articles/Tethys News/759.txt","MC1/News Articles/Tethys News/76.txt","MC1/News Articles/Tethys News/78.txt","MC1/News Articles/Tethys News/813.txt","MC1/News Articles/Tethys News/829.txt","MC1/News Articles/Tethys News/838.txt","MC1/News Articles/Tethys News/90.txt","MC1/News Articles/Tethys News/92.txt","MC1/News Articles/The Abila Post/139.txt","MC1/News Articles/The Abila Post/169.txt","MC1/News Articles/The Abila Post/185.txt","MC1/News Articles/The Abila Post/212.txt","MC1/News Articles/The Abila Post/218.txt","MC1/News Articles/The Abila Post/233.txt","MC1/News Articles/The Abila Post/250.txt","MC1/News Articles/The Abila Post/261.txt","MC1/News Articles/The Abila Post/265.txt","MC1/News Articles/The Abila Post/292.txt","MC1/News Articles/The Abila Post/304.txt","MC1/News Articles/The Abila Post/322.txt","MC1/News Articles/The Abila Post/326.txt","MC1/News Articles/The Abila Post/338.txt","MC1/News Articles/The Abila Post/356.txt","MC1/News Articles/The Abila Post/369.txt","MC1/News Articles/The Abila Post/398.txt","MC1/News Articles/The Abila Post/428.txt","MC1/News Articles/The Abila Post/429.txt","MC1/News Articles/The Abila Post/438.txt","MC1/News Articles/The Abila Post/439.txt","MC1/News Articles/The Abila Post/450.txt","MC1/News Articles/The Abila Post/458.txt","MC1/News Articles/The Abila Post/475.txt","MC1/News Articles/The Abila Post/477.txt","MC1/News Articles/The Abila Post/50.txt","MC1/News Articles/The Abila Post/528.txt","MC1/News Articles/The Abila Post/53.txt","MC1/News Articles/The Abila Post/54.txt","MC1/News Articles/The Abila Post/555.txt","MC1/News Articles/The Abila Post/557.txt","MC1/News Articles/The Abila Post/573.txt","MC1/News Articles/The Abila Post/576.txt","MC1/News Articles/The Abila Post/619.txt","MC1/News Articles/The Abila Post/654.txt","MC1/News Articles/The Abila Post/660.txt","MC1/News Articles/The Abila Post/663.txt","MC1/News Articles/The Abila Post/677.txt","MC1/News Articles/The Abila Post/682.txt","MC1/News Articles/The Abila Post/696.txt","MC1/News Articles/The Abila Post/699.txt","MC1/News Articles/The Abila Post/705.txt","MC1/News Articles/The Abila Post/713.txt","MC1/News Articles/The Abila Post/718.txt","MC1/News Articles/The Abila Post/756.txt","MC1/News Articles/The Abila Post/764.txt","MC1/News Articles/The Abila Post/782.txt","MC1/News Articles/The Abila Post/803.txt","MC1/News Articles/The Abila Post/805.txt","MC1/News Articles/The Abila Post/806.txt","MC1/News Articles/The Abila Post/807.txt","MC1/News Articles/The Abila Post/812.txt","MC1/News Articles/The Abila Post/83.txt","MC1/News Articles/The Abila Post/834.txt","MC1/News Articles/The Continent/100.txt","MC1/News Articles/The Continent/242.txt","MC1/News Articles/The Continent/245.txt","MC1/News Articles/The Continent/268.txt","MC1/News Articles/The Continent/302.txt","MC1/News Articles/The Continent/318.txt","MC1/News Articles/The Continent/36.txt","MC1/News Articles/The Continent/457.txt","MC1/News Articles/The Continent/513.txt","MC1/News Articles/The Continent/530.txt","MC1/News Articles/The Continent/535.txt","MC1/News Articles/The Continent/580.txt","MC1/News Articles/The Continent/784.txt","MC1/News Articles/The Continent/796.txt","MC1/News Articles/The Continent/88.txt","MC1/News Articles/The Explainer/127.txt","MC1/News Articles/The Explainer/177.txt","MC1/News Articles/The Explainer/197.txt","MC1/News Articles/The Explainer/205.txt","MC1/News Articles/The Explainer/258.txt","MC1/News Articles/The Explainer/260.txt","MC1/News Articles/The Explainer/300.txt","MC1/News Articles/The Explainer/324.txt","MC1/News Articles/The Explainer/334.txt","MC1/News Articles/The Explainer/340.txt","MC1/News Articles/The Explainer/377.txt","MC1/News Articles/The Explainer/382.txt","MC1/News Articles/The Explainer/385.txt","MC1/News Articles/The Explainer/397.txt","MC1/News Articles/The Explainer/442.txt","MC1/News Articles/The Explainer/491.txt","MC1/News Articles/The Explainer/527.txt","MC1/News Articles/The Explainer/661.txt","MC1/News Articles/The Explainer/667.txt","MC1/News Articles/The Explainer/679.txt","MC1/News Articles/The Explainer/691.txt","MC1/News Articles/The Explainer/703.txt","MC1/News Articles/The Explainer/715.txt","MC1/News Articles/The Explainer/731.txt","MC1/News Articles/The Explainer/747.txt","MC1/News Articles/The General Post/107.txt","MC1/News Articles/The General Post/131.txt","MC1/News Articles/The General Post/192.txt","MC1/News Articles/The General Post/223.txt","MC1/News Articles/The General Post/23.txt","MC1/News Articles/The General Post/235.txt","MC1/News Articles/The General Post/284.txt","MC1/News Articles/The General Post/316.txt","MC1/News Articles/The General Post/336.txt","MC1/News Articles/The General Post/345.txt","MC1/News Articles/The General Post/478.txt","MC1/News Articles/The General Post/493.txt","MC1/News Articles/The General Post/536.txt","MC1/News Articles/The General Post/543.txt","MC1/News Articles/The General Post/723.txt","MC1/News Articles/The General Post/825.txt","MC1/News Articles/The General Post/826.txt","MC1/News Articles/The General Post/835.txt","MC1/News Articles/The General Post/97.txt","MC1/News Articles/The Guide/145.txt","MC1/News Articles/The Guide/162.txt","MC1/News Articles/The Guide/189.txt","MC1/News Articles/The Guide/194.txt","MC1/News Articles/The Guide/224.txt","MC1/News Articles/The Guide/229.txt","MC1/News Articles/The Guide/296.txt","MC1/News Articles/The Guide/327.txt","MC1/News Articles/The Guide/328.txt","MC1/News Articles/The Guide/330.txt","MC1/News Articles/The Guide/363.txt","MC1/News Articles/The Guide/372.txt","MC1/News Articles/The Guide/373.txt","MC1/News Articles/The Guide/388.txt","MC1/News Articles/The Guide/424.txt","MC1/News Articles/The Guide/47.txt","MC1/News Articles/The Guide/509.txt","MC1/News Articles/The Guide/595.txt","MC1/News Articles/The Guide/614.txt","MC1/News Articles/The Guide/62.txt","MC1/News Articles/The Guide/641.txt","MC1/News Articles/The Guide/66.txt","MC1/News Articles/The Guide/664.txt","MC1/News Articles/The Guide/670.txt","MC1/News Articles/The Guide/725.txt","MC1/News Articles/The Guide/754.txt","MC1/News Articles/The Guide/758.txt","MC1/News Articles/The Guide/837.txt","MC1/News Articles/The Light of Truth/1.txt","MC1/News Articles/The Light of Truth/102.txt","MC1/News Articles/The Light of Truth/164.txt","MC1/News Articles/The Light of Truth/198.txt","MC1/News Articles/The Light of Truth/216.txt","MC1/News Articles/The Light of Truth/277.txt","MC1/News Articles/The Light of Truth/301.txt","MC1/News Articles/The Light of Truth/432.txt","MC1/News Articles/The Light of Truth/456.txt","MC1/News Articles/The Light of Truth/494.txt","MC1/News Articles/The Light of Truth/503.txt","MC1/News Articles/The Light of Truth/560.txt","MC1/News Articles/The Light of Truth/671.txt","MC1/News Articles/The Light of Truth/675.txt","MC1/News Articles/The Light of Truth/706.txt","MC1/News Articles/The Light of Truth/729.txt","MC1/News Articles/The Light of Truth/802.txt","MC1/News Articles/The Light of Truth/822.txt","MC1/News Articles/The Light of Truth/823.txt","MC1/News Articles/The Orb/0.txt","MC1/News Articles/The Orb/109.txt","MC1/News Articles/The Orb/148.txt","MC1/News Articles/The Orb/210.txt","MC1/News Articles/The Orb/211.txt","MC1/News Articles/The Orb/222.txt","MC1/News Articles/The Orb/239.txt","MC1/News Articles/The Orb/248.txt","MC1/News Articles/The Orb/249.txt","MC1/News Articles/The Orb/275.txt","MC1/News Articles/The Orb/357.txt","MC1/News Articles/The Orb/390.txt","MC1/News Articles/The Orb/455.txt","MC1/News Articles/The Orb/459.txt","MC1/News Articles/The Orb/523.txt","MC1/News Articles/The Orb/531.txt","MC1/News Articles/The Orb/546.txt","MC1/News Articles/The Orb/575.txt","MC1/News Articles/The Orb/622.txt","MC1/News Articles/The Orb/662.txt","MC1/News Articles/The Orb/672.txt","MC1/News Articles/The Orb/735.txt","MC1/News Articles/The Orb/741.txt","MC1/News Articles/The Orb/778.txt","MC1/News Articles/The Orb/832.txt","MC1/News Articles/The Orb/840.txt","MC1/News Articles/The Truth/112.txt","MC1/News Articles/The Truth/156.txt","MC1/News Articles/The Truth/165.txt","MC1/News Articles/The Truth/166.txt","MC1/News Articles/The Truth/20.txt","MC1/News Articles/The Truth/230.txt","MC1/News Articles/The Truth/240.txt","MC1/News Articles/The Truth/361.txt","MC1/News Articles/The Truth/394.txt","MC1/News Articles/The Truth/406.txt","MC1/News Articles/The Truth/41.txt","MC1/News Articles/The Truth/463.txt","MC1/News Articles/The Truth/474.txt","MC1/News Articles/The Truth/480.txt","MC1/News Articles/The Truth/552.txt","MC1/News Articles/The Truth/561.txt","MC1/News Articles/The Truth/581.txt","MC1/News Articles/The Truth/584.txt","MC1/News Articles/The Truth/599.txt","MC1/News Articles/The Truth/607.txt","MC1/News Articles/The Truth/621.txt","MC1/News Articles/The Truth/632.txt","MC1/News Articles/The Truth/645.txt","MC1/News Articles/The Truth/668.txt","MC1/News Articles/The Truth/724.txt","MC1/News Articles/The Truth/794.txt","MC1/News Articles/The Truth/795.txt","MC1/News Articles/The Truth/96.txt","MC1/News Articles/The Tulip/119.txt","MC1/News Articles/The Tulip/178.txt","MC1/News Articles/The Tulip/206.txt","MC1/News Articles/The Tulip/3.txt","MC1/News Articles/The Tulip/315.txt","MC1/News Articles/The Tulip/319.txt","MC1/News Articles/The Tulip/331.txt","MC1/News Articles/The Tulip/360.txt","MC1/News Articles/The Tulip/370.txt","MC1/News Articles/The Tulip/479.txt","MC1/News Articles/The Tulip/504.txt","MC1/News Articles/The Tulip/515.txt","MC1/News Articles/The Tulip/529.txt","MC1/News Articles/The Tulip/586.txt","MC1/News Articles/The Tulip/686.txt","MC1/News Articles/The Tulip/695.txt","MC1/News Articles/The Tulip/712.txt","MC1/News Articles/The Tulip/720.txt","MC1/News Articles/The Tulip/810.txt","MC1/News Articles/The World/111.txt","MC1/News Articles/The World/195.txt","MC1/News Articles/The World/278.txt","MC1/News Articles/The World/305.txt","MC1/News Articles/The World/472.txt","MC1/News Articles/The World/49.txt","MC1/News Articles/The World/497.txt","MC1/News Articles/The World/498.txt","MC1/News Articles/The World/517.txt","MC1/News Articles/The World/559.txt","MC1/News Articles/The World/587.txt","MC1/News Articles/The World/611.txt","MC1/News Articles/The World/736.txt","MC1/News Articles/The World/750.txt","MC1/News Articles/The World/809.txt","MC1/News Articles/The World/824.txt","MC1/News Articles/The World/84.txt","MC1/News Articles/The Wrap/116.txt","MC1/News Articles/The Wrap/158.txt","MC1/News Articles/The Wrap/17.txt","MC1/News Articles/The Wrap/183.txt","MC1/News Articles/The Wrap/187.txt","MC1/News Articles/The Wrap/207.txt","MC1/News Articles/The Wrap/217.txt","MC1/News Articles/The Wrap/236.txt","MC1/News Articles/The Wrap/243.txt","MC1/News Articles/The Wrap/271.txt","MC1/News Articles/The Wrap/349.txt","MC1/News Articles/The Wrap/408.txt","MC1/News Articles/The Wrap/409.txt","MC1/News Articles/The Wrap/445.txt","MC1/News Articles/The Wrap/448.txt","MC1/News Articles/The Wrap/492.txt","MC1/News Articles/The Wrap/500.txt","MC1/News Articles/The Wrap/520.txt","MC1/News Articles/The Wrap/680.txt","MC1/News Articles/The Wrap/704.txt","MC1/News Articles/The Wrap/740.txt","MC1/News Articles/The Wrap/769.txt","MC1/News Articles/The Wrap/788.txt","MC1/News Articles/The Wrap/799.txt","MC1/News Articles/The Wrap/814.txt","MC1/News Articles/The Wrap/843.txt","MC1/News Articles/Who What News/105.txt","MC1/News Articles/Who What News/137.txt","MC1/News Articles/Who What News/153.txt","MC1/News Articles/Who What News/310.txt","MC1/News Articles/Who What News/375.txt","MC1/News Articles/Who What News/422.txt","MC1/News Articles/Who What News/449.txt","MC1/News Articles/Who What News/469.txt","MC1/News Articles/Who What News/471.txt","MC1/News Articles/Who What News/473.txt","MC1/News Articles/Who What News/59.txt","MC1/News Articles/Who What News/626.txt","MC1/News Articles/Who What News/694.txt","MC1/News Articles/Who What News/716.txt","MC1/News Articles/Who What News/732.txt","MC1/News Articles/World Journal/126.txt","MC1/News Articles/World Journal/149.txt","MC1/News Articles/World Journal/180.txt","MC1/News Articles/World Journal/279.txt","MC1/News Articles/World Journal/351.txt","MC1/News Articles/World Journal/396.txt","MC1/News Articles/World Journal/501.txt","MC1/News Articles/World Journal/6.txt","MC1/News Articles/World Journal/646.txt","MC1/News Articles/World Journal/648.txt","MC1/News Articles/World Journal/687.txt","MC1/News Articles/World Journal/701.txt","MC1/News Articles/World Journal/739.txt","MC1/News Articles/World Journal/771.txt","MC1/News Articles/World Journal/81.txt","MC1/News Articles/World Source/132.txt","MC1/News Articles/World Source/353.txt","MC1/News Articles/World Source/393.txt","MC1/News Articles/World Source/564.txt","MC1/News Articles/World Source/643.txt","MC1/News Articles/World Source/728.txt","MC1/News Articles/World Source/762.txt","MC1/News Articles/World Source/775.txt","MC1/News Articles/World Source/787.txt","MC1/News Articles/Worldwise/114.txt","MC1/News Articles/Worldwise/143.txt","MC1/News Articles/Worldwise/196.txt","MC1/News Articles/Worldwise/228.txt","MC1/News Articles/Worldwise/274.txt","MC1/News Articles/Worldwise/309.txt","MC1/News Articles/Worldwise/312.txt","MC1/News Articles/Worldwise/5.txt","MC1/News Articles/Worldwise/538.txt","MC1/News Articles/Worldwise/553.txt","MC1/News Articles/Worldwise/58.txt","MC1/News Articles/Worldwise/589.txt","MC1/News Articles/Worldwise/591.txt","MC1/News Articles/Worldwise/593.txt","MC1/News Articles/Worldwise/594.txt","MC1/News Articles/Worldwise/620.txt","MC1/News Articles/Worldwise/629.txt","MC1/News Articles/Worldwise/659.txt","MC1/News Articles/Worldwise/730.txt","MC1/News Articles/Worldwise/752.txt","MC1/News Articles/Worldwise/755.txt","MC1/News Articles/Worldwise/765.txt","MC1/News Articles/Worldwise/774.txt","MC1/News Articles/Worldwise/780.txt","MC1/News Articles/Worldwise/792.txt","MC1/News Articles/Worldwise/808.txt","MC1/News Articles/Worldwise/815.txt","MC1/News Articles/Worldwise/816.txt","MC1/pre_clean.ipynb","MC1/resumes/Bio-Ada Campo.docx","MC1/resumes/Bio-Ingrid Barranco.docx","MC1/resumes/Bio-OrhanStrum.docx","MC1/resumes/Bio-Sten SanjorgeJr.docx","MC1/resumes/Bio-Willem Vasco.docx","MC1/resumes/Resume-AdanMorlun.docx","MC1/resumes/Resume-AlbinaHafon.docx","MC1/resumes/Resume-AndaRibera.docx","MC1/resumes/Resume-AxelCalzas.docx","MC1/resumes/Resume-BertrandOvan.docx","MC1/resumes/Resume-CarlaForluniau.docx","MC1/resumes/Resume-ClaudioHawelon.docx","MC1/resumes/Resume-CorneliaLais.docx","MC1/resumes/Resume-DanteCoginian.docx","MC1/resumes/Resume-ElsaOrilla.docx","MC1/resumes/Resume-EmileArpa.docx","MC1/resumes/Resume-FelixBalas.docx","MC1/resumes/Resume-FelixResumir.docx","MC1/resumes/Resume-HidekiCocinaro.docx","MC1/resumes/Resume-IreneNant.docx","MC1/resumes/Resume-IsakBaza.docx","MC1/resumes/Resume-IsandeBorrasca.docx","MC1/resumes/Resume-IsiaVann.docx","MC1/resumes/Resume-LarsAzada.docx","MC1/resumes/Resume-LidelseDedos.docx","MC1/resumes/Resume-LindaLagos.docx","MC1/resumes/Resume-LinneaBergen.docx","MC1/resumes/Resume-LoretoBodrogi.docx","MC1/resumes/Resume-LucasAlcazar.docx","MC1/resumes/Resume-MarinOnda.docx","MC1/resumes/Resume-MinkeMies.docx","MC1/resumes/Resume-NilsCalixto.docx","MC1/resumes/Resume-RachelPantanal.docx","MC1/resumes/Resume-StenigFusil.docx","MC1/resumes/Resume-SvenFlecha.docx"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+<meta name="distill:offset" content="../.."/>
+
+<script type="application/javascript">
+
+  window.headroom_prevent_pin = false;
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // initialize headroom for banner
+    var header = $('header').get(0);
+    var headerHeight = header.offsetHeight;
+    var headroom = new Headroom(header, {
+      tolerance: 5,
+      onPin : function() {
+        if (window.headroom_prevent_pin) {
+          window.headroom_prevent_pin = false;
+          headroom.unpin();
+        }
+      }
+    });
+    headroom.init();
+    if(window.location.hash)
+      headroom.unpin();
+    $(header).addClass('headroom--transition');
+
+    // offset scroll location for banner on hash change
+    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+    window.addEventListener("hashchange", function(event) {
+      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+    });
+
+    // responsive menu
+    $('.distill-site-header').each(function(i, val) {
+      var topnav = $(this);
+      var toggle = topnav.find('.nav-toggle');
+      toggle.on('click', function() {
+        topnav.toggleClass('responsive');
+      });
+    });
+
+    // nav dropdowns
+    $('.nav-dropbtn').click(function(e) {
+      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+      $(this).parent().siblings('.nav-dropdown')
+         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $("body").click(function(e){
+      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+    });
+    $(".nav-dropdown").click(function(e){
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<style type="text/css">
+
+/* Theme (user-documented overrideables for nav appearance) */
+
+.distill-site-nav {
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #0F2E3D;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
+
+.distill-site-header {
+
+}
+
+.distill-site-footer {
+
+}
+
+
+/* Site Header */
+
+.distill-site-header {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.distill-site-header .nav-left {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header .nav-left {
+    margin-left: 0;
+  }
+}
+
+
+.distill-site-header .nav-right {
+  float: right;
+  margin-right: 8px;
+}
+
+.distill-site-header a,
+.distill-site-header .title {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px 14px 10px;
+}
+
+.distill-site-header .title {
+  font-size: 18px;
+  min-width: 150px;
+}
+
+.distill-site-header .logo {
+  padding: 0;
+}
+
+.distill-site-header .logo img {
+  display: none;
+  max-height: 20px;
+  width: auto;
+  margin-bottom: -4px;
+}
+
+.distill-site-header .nav-image img {
+  max-height: 18px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+
+
+@media screen and (min-width: 1000px) {
+  .distill-site-header .logo img {
+    display: inline-block;
+  }
+  .distill-site-header .nav-left {
+    margin-left: 20px;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 20px;
+  }
+  .distill-site-header .title {
+    padding-left: 12px;
+  }
+}
+
+
+.distill-site-header .nav-toggle {
+  display: none;
+}
+
+.nav-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 4px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  z-index: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.nav-dropdown-content hr {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-dropdown-active {
+  display: block;
+}
+
+.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+  color: black;
+  padding: 6px 24px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #999999;
+  white-space: nowrap;
+}
+
+.nav-dropdown:hover .nav-dropbtn {
+  color: white;
+}
+
+.nav-dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav-right .nav-dropdown-content {
+  margin-left: -45%;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+  .distill-site-header a.nav-toggle {
+    float: right;
+    display: block;
+  }
+  .distill-site-header .title {
+    margin-left: 0;
+  }
+  .distill-site-header .nav-right {
+    margin-right: 0;
+  }
+  .distill-site-header {
+    overflow: hidden;
+  }
+  .nav-right .nav-dropdown-content {
+    margin-left: 0;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-header.responsive {position: relative; min-height: 500px; }
+  .distill-site-header.responsive a.nav-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .distill-site-header.responsive a,
+  .distill-site-header.responsive .nav-dropdown {
+    display: block;
+    text-align: left;
+  }
+  .distill-site-header.responsive .nav-left,
+  .distill-site-header.responsive .nav-right {
+    width: 100%;
+  }
+  .distill-site-header.responsive .nav-dropdown {float: none;}
+  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Site Footer */
+
+.distill-site-footer {
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 3;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+/* Headroom */
+
+d-title {
+  padding-top: 6rem;
+}
+
+@media print {
+  d-title {
+    padding-top: 4rem;
+  }
+}
+
+.headroom {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.headroom--transition {
+  transition: all .4s ease-in-out;
+}
+
+.headroom--unpinned {
+  top: -100px;
+}
+
+.headroom--pinned {
+  top: 0;
+}
+
+/* adjust viewport for navbar height */
+/* helps vertically center bootstrap (non-distill) content */
+.min-vh-100 {
+  min-height: calc(100vh - 100px) !important;
+}
+
+</style>
+
+<script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+<link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+<link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
+<script src="../../site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+<script src="../../site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+<script type="application/javascript">
+
+function getMeta(metaName) {
+  var metas = document.getElementsByTagName('meta');
+  for (let i = 0; i < metas.length; i++) {
+    if (metas[i].getAttribute('name') === metaName) {
+      return metas[i].getAttribute('content');
+    }
+  }
+  return '';
+}
+
+function offsetURL(url) {
+  var offset = getMeta('distill:offset');
+  return offset ? offset + '/' + url : url;
+}
+
+function createFuseIndex() {
+
+  // create fuse index
+  var options = {
+    keys: [
+      { name: 'title', weight: 20 },
+      { name: 'categories', weight: 15 },
+      { name: 'description', weight: 10 },
+      { name: 'contents', weight: 5 },
+    ],
+    ignoreLocation: true,
+    threshold: 0
+  };
+  var fuse = new window.Fuse([], options);
+
+  // fetch the main search.json
+  return fetch(offsetURL('search.json'))
+    .then(function(response) {
+      if (response.status == 200) {
+        return response.json().then(function(json) {
+          // index main articles
+          json.articles.forEach(function(article) {
+            fuse.add(article);
+          });
+          // download collections and index their articles
+          return Promise.all(json.collections.map(function(collection) {
+            return fetch(offsetURL(collection)).then(function(response) {
+              if (response.status === 200) {
+                return response.json().then(function(articles) {
+                  articles.forEach(function(article) {
+                    fuse.add(article);
+                  });
+                })
+              } else {
+                return Promise.reject(
+                  new Error('Unexpected status from search index request: ' +
+                            response.status)
+                );
+              }
+            });
+          })).then(function() {
+            return fuse;
+          });
+        });
+
+      } else {
+        return Promise.reject(
+          new Error('Unexpected status from search index request: ' +
+                      response.status)
+        );
+      }
+    });
+}
+
+window.document.addEventListener("DOMContentLoaded", function (event) {
+
+  // get search element (bail if we don't have one)
+  var searchEl = window.document.getElementById('distill-search');
+  if (!searchEl)
+    return;
+
+  createFuseIndex()
+    .then(function(fuse) {
+
+      // make search box visible
+      searchEl.classList.remove('hidden');
+
+      // initialize autocomplete
+      var options = {
+        autoselect: true,
+        hint: false,
+        minLength: 2,
+      };
+      window.autocomplete(searchEl, options, [{
+        source: function(query, callback) {
+          const searchOptions = {
+            isCaseSensitive: false,
+            shouldSort: true,
+            minMatchCharLength: 2,
+            limit: 10,
+          };
+          var results = fuse.search(query, searchOptions);
+          callback(results
+            .map(function(result) { return result.item; })
+          );
+        },
+        templates: {
+          suggestion: function(suggestion) {
+            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+              : '';
+            var html = `
+              <div class="search-item">
+                <h3>${suggestion.title}</h3>
+                <div class="search-item-description">
+                  ${suggestion.description || ''}
+                </div>
+                <div class="search-item-preview">
+                  ${img}
+                </div>
+              </div>
+            `;
+            return html;
+          }
+        }
+      }]).on('autocomplete:selected', function(event, suggestion) {
+        window.location.href = offsetURL(suggestion.path);
+      });
+      // remove inline display style on autocompleter (we want to
+      // manage responsive display via css)
+      $('.algolia-autocomplete').css("display", "");
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+});
+
+</script>
+
+<style type="text/css">
+
+.nav-search {
+  font-size: x-small;
+}
+
+/* Algolioa Autocomplete */
+
+.algolia-autocomplete {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: sub;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  padding-top: 8px;
+  padding-bottom: 0;
+  border-radius: 6px;
+  border: 1px #0F2E3D solid;
+  width: 180px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .distill-site-nav .algolia-autocomplete {
+    display: none;
+    visibility: hidden;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete {
+    display: inline-block;
+    visibility: visible;
+  }
+  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+    margin-left: 0;
+    width: 400px;
+    max-height: 400px;
+  }
+}
+
+.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+  width: 90%;
+  outline: none;
+  border: none;
+}
+
+.algolia-autocomplete .aa-hint {
+  color: #999;
+}
+.algolia-autocomplete .aa-dropdown-menu {
+  width: 550px;
+  max-height: 70vh;
+  overflow-x: visible;
+  overflow-y: scroll;
+  padding: 5px;
+  margin-top: 3px;
+  margin-left: -150px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #999;
+  border-top: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  cursor: pointer;
+  padding: 5px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+  overflow: hidden;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+  font-size: 1rem;
+  margin-block-start: 0;
+  margin-block-end: 5px;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+  display: inline-block;
+  overflow: hidden;
+  height: 2.8em;
+  width: 80%;
+  margin-right: 4%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+  display: inline-block;
+  width: 15%;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+  height: 3em;
+  width: auto;
+  display: none;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+  display: initial;
+}
+
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+  background-color: #eee;
+}
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+  font-weight: bold;
+  font-style: normal;
+}
+
+</style>
+
+
+<!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+<style type="text/css">
+
+body {
+  background-color: white;
+}
+
+.pandoc-table {
+  width: 100%;
+}
+
+.pandoc-table>caption {
+  margin-bottom: 10px;
+}
+
+.pandoc-table th:not([align]) {
+  text-align: left;
+}
+
+.pagedtable-footer {
+  font-size: 15px;
+}
+
+d-byline .byline {
+  grid-template-columns: 2fr 2fr;
+}
+
+d-byline .byline h3 {
+  margin-block-start: 1.5em;
+}
+
+d-byline .byline .authors-affiliations h3 {
+  margin-block-start: 0.5em;
+}
+
+.authors-affiliations .orcid-id {
+  width: 16px;
+  height:16px;
+  margin-left: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
+  padding-bottom: 2px;
+}
+
+d-title .dt-tags {
+  margin-top: 1em;
+  grid-column: text;
+}
+
+.dt-tags .dt-tag {
+  text-decoration: none;
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0em 0.4em;
+  margin-right: 0.5em;
+  margin-bottom: 0.4em;
+  font-size: 70%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+d-article table.gt_table td,
+d-article table.gt_table th {
+  border-bottom: none;
+}
+
+.html-widget {
+  margin-bottom: 2.0em;
+}
+
+.l-screen-inset {
+  padding-right: 16px;
+}
+
+.l-screen .caption {
+  margin-left: 10px;
+}
+
+.shaded {
+  background: rgb(247, 247, 247);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .html-widget {
+  margin-bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shaded .shaded-content {
+  background: white;
+}
+
+.text-output {
+  margin-top: 0;
+  line-height: 1.5em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+d-article {
+  padding-top: 2.5rem;
+  padding-bottom: 30px;
+}
+
+d-appendix {
+  padding-top: 30px;
+}
+
+d-article>p>img {
+  width: 100%;
+}
+
+d-article h2 {
+  margin: 1rem 0 1.5rem 0;
+}
+
+d-article h3 {
+  margin-top: 1.5rem;
+}
+
+d-article iframe {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.0em;
+  width: 100%;
+}
+
+/* Tweak code blocks */
+
+d-article div.sourceCode code,
+d-article pre code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: auto;
+}
+
+d-article div.sourceCode {
+  background-color: white;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 10px;
+  font-size: 12px;
+  border-left: 2px solid rgba(0,0,0,0.1);
+}
+
+d-article pre {
+  font-size: 12px;
+  color: black;
+  background: none;
+  margin-top: 0;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+d-article pre a {
+  border-bottom: none;
+}
+
+d-article pre a:hover {
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+d-article details {
+  grid-column: text;
+  margin-bottom: 0.8em;
+}
+
+@media(min-width: 768px) {
+
+d-article pre,
+d-article div.sourceCode,
+d-article div.sourceCode pre {
+  overflow: visible !important;
+}
+
+d-article div.sourceCode pre {
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+d-article pre {
+  font-size: 14px;
+}
+
+}
+
+figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* CSS for d-contents */
+
+.d-contents {
+  grid-column: text;
+  color: rgba(0,0,0,0.8);
+  font-size: 0.9em;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+  padding-left: 0.25em;
+  justify-self: start;
+}
+
+@media(min-width: 1000px) {
+  .d-contents.d-contents-float {
+    height: 0;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    justify-self: center;
+    padding-right: 3em;
+    padding-left: 2em;
+  }
+}
+
+.d-contents nav h3 {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.d-contents li {
+  list-style-type: none
+}
+
+.d-contents nav > ul {
+  padding-left: 0;
+}
+
+.d-contents ul {
+  padding-left: 1em
+}
+
+.d-contents nav ul li {
+  margin-top: 0.6em;
+  margin-bottom: 0.2em;
+}
+
+.d-contents nav a {
+  font-size: 13px;
+  border-bottom: none;
+  text-decoration: none
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.d-contents nav a:hover {
+  text-decoration: underline solid rgba(0, 0, 0, 0.6)
+}
+
+.d-contents nav > ul > li > a {
+  font-weight: 600;
+}
+
+.d-contents nav > ul > li > ul {
+  font-weight: inherit;
+}
+
+.d-contents nav > ul > li > ul > li {
+  margin-top: 0.2em;
+}
+
+
+.d-contents nav ul {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.d-article-with-toc h2:nth-child(2) {
+  margin-top: 0;
+}
+
+
+/* Figure */
+
+.figure {
+  position: relative;
+  margin-bottom: 2.5em;
+  margin-top: 1.5em;
+}
+
+.figure img {
+  width: 100%;
+}
+
+.figure .caption {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 1.5em;
+}
+
+.figure img.external {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.figure .caption a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.figure .caption b,
+.figure .caption strong, {
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1.0);
+}
+
+/* Citations */
+
+d-article .citation {
+  color: inherit;
+  cursor: inherit;
+}
+
+div.hanging-indent{
+  margin-left: 1em; text-indent: -1em;
+}
+
+/* Citation hover box */
+
+.tippy-box[data-theme~=light-border] {
+  background-color: rgba(250, 250, 250, 0.95);
+}
+
+.tippy-content > p {
+  margin-bottom: 0;
+  padding: 2px;
+}
+
+
+/* Tweak 1000px media break to show more text */
+
+@media(min-width: 1000px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 16px;
+  }
+
+  .grid {
+    grid-column-gap: 16px;
+  }
+
+  d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+  }
+  figure .caption, .figure .caption, figure figcaption {
+    font-size: 13px;
+  }
+}
+
+@media(min-width: 1180px) {
+  .base-grid,
+  distill-header,
+  d-title,
+  d-abstract,
+  d-article,
+  d-appendix,
+  distill-appendix,
+  d-byline,
+  d-footnote-list,
+  d-citation-list,
+  distill-footer {
+    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+    grid-column-gap: 32px;
+  }
+
+  .grid {
+    grid-column-gap: 32px;
+  }
+}
+
+
+/* Get the citation styles for the appendix (not auto-injected on render since
+   we do our own rendering of the citation appendix) */
+
+d-appendix .citation-appendix,
+.d-appendix .citation-appendix {
+  font-size: 11px;
+  line-height: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px 18px;
+  border-radius: 3px;
+  color: rgba(150, 150, 150, 1);
+  overflow: hidden;
+  margin-top: -12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Include appendix styles here so they can be overridden */
+
+d-appendix {
+  contain: layout style;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-top: 60px;
+  margin-bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0,0,0,0.5);
+  padding-top: 60px;
+  padding-bottom: 48px;
+}
+
+d-appendix h3 {
+  grid-column: page-start / text-start;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.65);
+}
+
+d-appendix h3 + * {
+  margin-top: 1em;
+}
+
+d-appendix ol {
+  padding: 0 0 0 15px;
+}
+
+@media (min-width: 768px) {
+  d-appendix ol {
+    padding: 0 0 0 30px;
+    margin-left: -30px;
+  }
+}
+
+d-appendix li {
+  margin-bottom: 1em;
+}
+
+d-appendix a {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+d-appendix > * {
+  grid-column: text;
+}
+
+d-appendix > d-footnote-list,
+d-appendix > d-citation-list,
+d-appendix > distill-appendix {
+  grid-column: screen;
+}
+
+/* Include footnote styles here so they can be overridden */
+
+d-footnote-list {
+  contain: layout style;
+}
+
+d-footnote-list > * {
+  grid-column: text;
+}
+
+d-footnote-list a.footnote-backlink {
+  color: rgba(0,0,0,0.3);
+  padding-left: 0.5em;
+}
+
+
+
+/* Anchor.js */
+
+.anchorjs-link {
+  /*transition: all .25s linear; */
+  text-decoration: none;
+  border-bottom: none;
+}
+*:hover > .anchorjs-link {
+  margin-left: -1.125em !important;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* Social footer */
+
+.social_footer {
+  margin-top: 30px;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.67);
+}
+
+.disqus-comments {
+  margin-right: 30px;
+}
+
+.disqus-comment-count {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+#disqus_thread {
+  margin-top: 30px;
+}
+
+.article-sharing a {
+  border-bottom: none;
+  margin-right: 8px;
+}
+
+.article-sharing a:hover {
+  border-bottom: none;
+}
+
+.sidebar-section.subscribe {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.subscribe p {
+  margin-bottom: 0.5em;
+}
+
+
+.article-footer .subscribe {
+  font-size: 15px;
+  margin-top: 45px;
+}
+
+
+.sidebar-section.custom {
+  font-size: 12px;
+  line-height: 1.6em;
+}
+
+.custom p {
+  margin-bottom: 0.5em;
+}
+
+/* Styles for listing layout (hide title) */
+.layout-listing d-title, .layout-listing .d-title {
+  display: none;
+}
+
+/* Styles for posts lists (not auto-injected) */
+
+
+.posts-with-sidebar {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.posts-list .description h2,
+.posts-list .description p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.posts-list .description h2 {
+  font-weight: 700;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.posts-list h2.post-tag {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 12px;
+}
+.posts-list {
+  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+.posts-list .post-preview {
+  text-decoration: none;
+  overflow: hidden;
+  display: block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 0;
+}
+
+.post-preview-last {
+  border-bottom: none !important;
+}
+
+.posts-list .posts-list-caption {
+  grid-column: screen;
+  font-weight: 400;
+}
+
+.posts-list .post-preview h2 {
+  margin: 0 0 6px 0;
+  line-height: 1.2em;
+  font-style: normal;
+  font-size: 24px;
+}
+
+.posts-list .post-preview p {
+  margin: 0 0 12px 0;
+  line-height: 1.4em;
+  font-size: 16px;
+}
+
+.posts-list .post-preview .thumbnail {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 500px;
+}
+.posts-list .post-preview img {
+  width: 100%;
+  display: block;
+}
+
+.posts-list .metadata {
+  font-size: 12px;
+  line-height: 1.4em;
+  margin-bottom: 18px;
+}
+
+.posts-list .metadata > * {
+  display: inline-block;
+}
+
+.posts-list .metadata .publishedDate {
+  margin-right: 2em;
+}
+
+.posts-list .metadata .dt-authors {
+  display: block;
+  margin-top: 0.3em;
+  margin-right: 2em;
+}
+
+.posts-list .dt-tags {
+  display: block;
+  line-height: 1em;
+}
+
+.posts-list .dt-tags .dt-tag {
+  display: inline-block;
+  color: rgba(0,0,0,0.6);
+  padding: 0.3em 0.4em;
+  margin-right: 0.2em;
+  margin-bottom: 0.4em;
+  font-size: 60%;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.posts-list img {
+  opacity: 1;
+}
+
+.posts-list img[data-src] {
+  opacity: 0;
+}
+
+.posts-more {
+  clear: both;
+}
+
+
+.posts-sidebar {
+  font-size: 16px;
+}
+
+.posts-sidebar h3 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.sidebar-section {
+  margin-bottom: 30px;
+}
+
+.categories ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.categories li {
+  color: rgba(0, 0, 0, 0.8);
+  margin-bottom: 0;
+}
+
+.categories li>a {
+  border-bottom: none;
+}
+
+.categories li>a:hover {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.categories .active {
+  font-weight: 600;
+}
+
+.categories .category-count {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+
+@media(min-width: 768px) {
+  .posts-list .post-preview h2 {
+    font-size: 26px;
+  }
+  .posts-list .post-preview .thumbnail {
+    float: right;
+    width: 30%;
+    margin-bottom: 0;
+  }
+  .posts-list .post-preview .description {
+    float: left;
+    width: 45%;
+  }
+  .posts-list .post-preview .metadata {
+    float: left;
+    width: 20%;
+    margin-top: 8px;
+  }
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.5em;
+    font-size: 16px;
+  }
+  .posts-with-sidebar .posts-list {
+    float: left;
+    width: 75%;
+  }
+  .posts-with-sidebar .posts-sidebar {
+    float: right;
+    width: 20%;
+    margin-top: 60px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+
+/* Improve display for browsers without grid (IE/Edge <= 15) */
+
+.downlevel {
+  line-height: 1.6em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+}
+
+.downlevel .d-title {
+  padding-top: 6rem;
+  padding-bottom: 1.5rem;
+}
+
+.downlevel .d-title h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1em;
+  margin: 0 0 0.5rem;
+}
+
+.downlevel .d-title p {
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.55em;
+  margin-top: 0;
+}
+
+.downlevel .d-byline {
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  font-size: 0.8rem;
+  line-height: 1.8em;
+}
+
+.downlevel .section-separator {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.downlevel .d-article {
+  font-size: 1.06rem;
+  line-height: 1.7em;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+
+.downlevel .d-appendix {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: none;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  margin-bottom: 0;
+  color: rgba(0,0,0,0.5);
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.downlevel .footnotes ol {
+  padding-left: 13px;
+}
+
+.downlevel .base-grid,
+.downlevel .distill-header,
+.downlevel .d-title,
+.downlevel .d-abstract,
+.downlevel .d-article,
+.downlevel .d-appendix,
+.downlevel .distill-appendix,
+.downlevel .d-byline,
+.downlevel .d-footnote-list,
+.downlevel .d-citation-list,
+.downlevel .distill-footer,
+.downlevel .appendix-bottom,
+.downlevel .posts-container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media(min-width: 768px) {
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+  padding-left: 150px;
+  padding-right: 150px;
+  max-width: 900px;
+}
+}
+
+.downlevel pre code {
+  display: block;
+  border-left: 2px solid rgba(0, 0, 0, .1);
+  padding: 0 0 0 20px;
+  font-size: 14px;
+}
+
+.downlevel code, .downlevel pre {
+  color: black;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+.downlevel .posts-list .post-preview {
+  color: inherit;
+}
+
+
+
+</style>
+
+<script type="application/javascript">
+
+function is_downlevel_browser() {
+  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                 window.navigator.userAgent)) {
+    return true;
+  } else {
+    return window.load_distill_framework === undefined;
+  }
+}
+
+// show body when load is complete
+function on_load_complete() {
+
+  // add anchors
+  if (window.anchors) {
+    window.anchors.options.placement = 'left';
+    window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+  }
+
+
+  // set body to visible
+  document.body.style.visibility = 'visible';
+
+  // force redraw for leaflet widgets
+  if (window.HTMLWidgets) {
+    var maps = window.HTMLWidgets.findAll(".leaflet");
+    $.each(maps, function(i, el) {
+      var map = this.getMap();
+      map.invalidateSize();
+      map.eachLayer(function(layer) {
+        if (layer instanceof L.TileLayer)
+          layer.redraw();
+      });
+    });
+  }
+
+  // trigger 'shown' so htmlwidgets resize
+  $('d-article').trigger('shown');
+}
+
+function init_distill() {
+
+  init_common();
+
+  // create front matter
+  var front_matter = $('<d-front-matter></d-front-matter>');
+  $('#distill-front-matter').wrap(front_matter);
+
+  // create d-title
+  $('.d-title').changeElementType('d-title');
+
+  // create d-byline
+  var byline = $('<d-byline></d-byline>');
+  $('.d-byline').replaceWith(byline);
+
+  // create d-article
+  var article = $('<d-article></d-article>');
+  $('.d-article').wrap(article).children().unwrap();
+
+  // move posts container into article
+  $('.posts-container').appendTo($('d-article'));
+
+  // create d-appendix
+  $('.d-appendix').changeElementType('d-appendix');
+
+  // flag indicating that we have appendix items
+  var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+  // replace footnotes with <d-footnote>
+  $('.footnote-ref').each(function(i, val) {
+    appendix = true;
+    var href = $(this).attr('href');
+    var id = href.replace('#', '');
+    var fn = $('#' + id);
+    var fn_p = $('#' + id + '>p');
+    fn_p.find('.footnote-back').remove();
+    var text = fn_p.html();
+    var dtfn = $('<d-footnote></d-footnote>');
+    dtfn.html(text);
+    $(this).replaceWith(dtfn);
+  });
+  // remove footnotes
+  $('.footnotes').remove();
+
+  // move refs into #references-listing
+  $('#references-listing').replaceWith($('#refs'));
+
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    var id = $(this).attr('id');
+    $('.d-contents a[href="#' + id + '"]').parent().remove();
+    appendix = true;
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+  });
+
+  // show d-appendix if we have appendix content
+  $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+  // localize layout chunks to just output
+  $('.layout-chunk').each(function(i, val) {
+
+    // capture layout
+    var layout = $(this).attr('data-layout');
+
+    // apply layout to markdown level block elements
+    var elements = $(this).children().not('details, div.sourceCode, pre, script');
+    elements.each(function(i, el) {
+      var layout_div = $('<div class="' + layout + '"></div>');
+      if (layout_div.hasClass('shaded')) {
+        var shaded_content = $('<div class="shaded-content"></div>');
+        $(this).wrap(shaded_content);
+        $(this).parent().wrap(layout_div);
+      } else {
+        $(this).wrap(layout_div);
+      }
+    });
+
+
+    // unwrap the layout-chunk div
+    $(this).children().unwrap();
+  });
+
+  // remove code block used to force  highlighting css
+  $('.distill-force-highlighting-css').parent().remove();
+
+  // remove empty line numbers inserted by pandoc when using a
+  // custom syntax highlighting theme
+  $('code.sourceCode a:empty').remove();
+
+  // load distill framework
+  load_distill_framework();
+
+  // wait for window.distillRunlevel == 4 to do post processing
+  function distill_post_process() {
+
+    if (!window.distillRunlevel || window.distillRunlevel < 4)
+      return;
+
+    // hide author/affiliations entirely if we have no authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+    if (!have_authors)
+      $('d-byline').addClass('hidden');
+
+    // article with toc class
+    $('.d-contents').parent().addClass('d-article-with-toc');
+
+    // strip links that point to #
+    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+    // add orcid ids
+    $('.authors-affiliations').find('.author').each(function(i, el) {
+      var orcid_id = front_matter.authors[i].orcidID;
+      if (orcid_id) {
+        var a = $('<a></a>');
+        a.attr('href', 'https://orcid.org/' + orcid_id);
+        var img = $('<img></img>');
+        img.addClass('orcid-id');
+        img.attr('alt', 'ORCID ID');
+        img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+        a.append(img);
+        $(this).append(a);
+      }
+    });
+
+    // hide elements of author/affiliations grid that have no value
+    function hide_byline_column(caption) {
+      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+    }
+
+    // affiliations
+    var have_affiliations = false;
+    for (var i = 0; i<front_matter.authors.length; ++i) {
+      var author = front_matter.authors[i];
+      if (author.affiliation !== "&nbsp;") {
+        have_affiliations = true;
+        break;
+      }
+    }
+    if (!have_affiliations)
+      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+    // published date
+    if (!front_matter.publishedDate)
+      hide_byline_column("Published");
+
+    // document object identifier
+    var doi = $('d-byline').find('h3:contains("DOI")');
+    var doi_p = doi.next().empty();
+    if (!front_matter.doi) {
+      // if we have a citation and valid citationText then link to that
+      if ($('#citation').length > 0 && front_matter.citationText) {
+        doi.html('Citation');
+        $('<a href="#citation"></a>')
+          .text(front_matter.citationText)
+          .appendTo(doi_p);
+      } else {
+        hide_byline_column("DOI");
+      }
+    } else {
+      $('<a></a>')
+         .attr('href', "https://doi.org/" + front_matter.doi)
+         .html(front_matter.doi)
+         .appendTo(doi_p);
+    }
+
+     // change plural form of authors/affiliations
+    if (front_matter.authors.length === 1) {
+      var grid = $('.authors-affiliations');
+      grid.children('h3:contains("Authors")').text('Author');
+      grid.children('h3:contains("Affiliations")').text('Affiliation');
+    }
+
+    // remove d-appendix and d-footnote-list local styles
+    $('d-appendix > style:first-child').remove();
+    $('d-footnote-list > style:first-child').remove();
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // hoverable references
+    $('span.citation[data-cites]').each(function() {
+      var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+      window.tippy(this, {
+        allowHTML: true,
+        content: refHtml,
+        maxWidth: 500,
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start'
+      });
+    });
+
+    // clear polling timer
+    clearInterval(tid);
+
+    // show body now that everything is ready
+    on_load_complete();
+  }
+
+  var tid = setInterval(distill_post_process, 50);
+  distill_post_process();
+
+}
+
+function init_downlevel() {
+
+  init_common();
+
+   // insert hr after d-title
+  $('.d-title').after($('<hr class="section-separator"/>'));
+
+  // check if we have authors
+  var front_matter = JSON.parse($("#distill-front-matter").html());
+  var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+  // manage byline/border
+  if (!have_authors)
+    $('.d-byline').remove();
+  $('.d-byline').after($('<hr class="section-separator"/>'));
+  $('.d-byline a').remove();
+
+  // remove toc
+  $('.d-contents').remove();
+
+  // move appendix elements
+  $('h1.appendix, h2.appendix').each(function(i, val) {
+    $(this).changeElementType('h3');
+  });
+  $('h3.appendix').each(function(i, val) {
+    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+  });
+
+
+  // inject headers into references and footnotes
+  var refs_header = $('<h3></h3>');
+  refs_header.text('References');
+  $('#refs').prepend(refs_header);
+
+  var footnotes_header = $('<h3></h3');
+  footnotes_header.text('Footnotes');
+  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+  // move appendix-bottom entries to the bottom
+  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+  $('.appendix-bottom').remove();
+
+  // remove appendix if it's empty
+  if ($('.d-appendix').children().length === 0)
+    $('.d-appendix').remove();
+
+  // prepend separator above appendix
+  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+  // trim code
+  $('pre>code').each(function(i, val) {
+    $(this).html($.trim($(this).html()));
+  });
+
+  // move posts-container right before article
+  $('.posts-container').insertBefore($('.d-article'));
+
+  $('body').addClass('downlevel');
+
+  on_load_complete();
+}
+
+
+function init_common() {
+
+  // jquery plugin to change element types
+  (function($) {
+    $.fn.changeElementType = function(newType) {
+      var attrs = {};
+
+      $.each(this[0].attributes, function(idx, attr) {
+        attrs[attr.nodeName] = attr.nodeValue;
+      });
+
+      this.replaceWith(function() {
+        return $("<" + newType + "/>", attrs).append($(this).contents());
+      });
+    };
+  })(jQuery);
+
+  // prevent underline for linked images
+  $('a > img').parent().css({'border-bottom' : 'none'});
+
+  // mark non-body figures created by knitr chunks as 100% width
+  $('.layout-chunk').each(function(i, val) {
+    var figures = $(this).find('img, .html-widget');
+    if ($(this).attr('data-layout') !== "l-body") {
+      figures.css('width', '100%');
+    } else {
+      figures.css('max-width', '100%');
+      figures.filter("[width]").each(function(i, val) {
+        var fig = $(this);
+        fig.css('width', fig.attr('width') + 'px');
+      });
+
+    }
+  });
+
+  // auto-append index.html to post-preview links in file: protocol
+  // and in rstudio ide preview
+  $('.post-preview').each(function(i, val) {
+    if (window.location.protocol === "file:")
+      $(this).attr('href', $(this).attr('href') + "index.html");
+  });
+
+  // get rid of index.html references in header
+  if (window.location.protocol !== "file:") {
+    $('.distill-site-header a[href]').each(function(i,val) {
+      $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+    });
+  }
+
+  // add class to pandoc style tables
+  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+  $('.kable-table').children('table').addClass('pandoc-table');
+
+  // add figcaption style to table captions
+  $('caption').parent('table').addClass("figcaption");
+
+  // initialize posts list
+  if (window.init_posts_list)
+    window.init_posts_list();
+
+  // implmement disqus comment link
+  $('.disqus-comment-count').click(function() {
+    window.headroom_prevent_pin = true;
+    $('#disqus_thread').toggleClass('hidden');
+    if (!$('#disqus_thread').hasClass('hidden')) {
+      var offset = $(this).offset();
+      $(window).resize();
+      $('html, body').animate({
+        scrollTop: offset.top - 35
+      });
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (is_downlevel_browser())
+    init_downlevel();
+  else
+    window.addEventListener('WebComponentsReady', init_distill);
+});
+
+</script>
+
+<!--/radix_placeholder_distill-->
+  <script src="../../site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+  <link href="../../site_libs/vis-4.20.1/vis.css" rel="stylesheet" />
+  <script src="../../site_libs/vis-4.20.1/vis.min.js"></script>
+  <script src="../../site_libs/visNetwork-binding-2.0.9/visNetwork.js"></script>
+  <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="../../site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="../../site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+<!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Assignment_MC1","description":"A short description of the post.","authors":[{"author":"Xiaozhu Mao","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-07-03T00:00:00.000+00:00","citationText":"Mao, 2021"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="../../index.html" class="title">DataViz Blog</a>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="../../index.html">Home</a>
+<a href="../../about.html">About</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Assignment_MC1</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p><p>A short description of the post.</p></p>
+</div>
+
+<div class="d-byline">
+  Xiaozhu Mao true 
+  
+<br/>07-03-2021
+</div>
+
+<div class="d-article">
+<h4 id="loading-in-packages">Loading in packages</h4>
+<p>The packages will be used in the assignment.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>packages</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'stringr'</span>, <span class='st'>'tidyr'</span>,<span class='st'>'plyr'</span>,<span class='st'>'tidyverse'</span>, <span class='st'>'tm'</span>, <span class='st'>'lubridate'</span>, 
+             <span class='st'>'corporaexplorer'</span>, <span class='st'>'quanteda'</span>,<span class='st'>'quanteda.textstats'</span>, <span class='st'>"visNetwork"</span>, <span class='st'>"networkD3"</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>p</span> <span class='kw'>in</span> <span class='va'>packages</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='kw'>if</span><span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>p</span>, character.only <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
+  <span class='op'>}</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>p</span>,character.only <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+</div>
+<h4 id="loading-in-data">Loading in data</h4>
+<ol type="1">
+<li>get the list of articles in all paper sources</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>list_of_paper</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='st'>"MC1/News Articles"</span>, recursive <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                            pattern <span class='op'>=</span> <span class='st'>"."</span>, 
+                            full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>iteratively load in each article and save into a list of dataframes</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df_list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>num</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='va'>list_of_paper</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='va'>temp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>i</span>, <span class='va'>readLines</span><span class='op'>)</span>
+
+  <span class='va'>temp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>temp</span><span class='op'>)</span>,
+                   <span class='kw'>function</span><span class='op'>(</span><span class='va'>j</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+                          news_no<span class='op'>=</span><span class='fu'>str_extract</span><span class='op'>(</span><span class='va'>i</span>, <span class='st'>"(?&lt;=\\/)\\d+"</span><span class='op'>)</span>,
+                          rawdata<span class='op'>=</span><span class='va'>temp</span><span class='op'>[[</span><span class='va'>j</span><span class='op'>]</span><span class='op'>]</span>,
+                          stringsAsFactors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
+                   
+  <span class='va'>df_temp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>rbind</span>, <span class='va'>temp</span><span class='op'>)</span>
+  <span class='va'>df_temp</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"type"</span>,<span class='st'>"entry"</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'>str_trim</span><span class='op'>(</span><span class='fu'>str_split_fixed</span><span class='op'>(</span><span class='va'>df_temp</span><span class='op'>$</span><span class='va'>rawdata</span>,<span class='st'>":"</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+  
+  <span class='va'>df_temp</span> <span class='op'>&lt;-</span> <span class='va'>df_temp</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"news_no"</span>,<span class='st'>"type"</span>,<span class='st'>"entry"</span><span class='op'>)</span><span class='op'>]</span>
+  <span class='va'>df_temp</span> <span class='op'>&lt;-</span> <span class='fu'>pivot_wider</span><span class='op'>(</span><span class='va'>df_temp</span>, names_from <span class='op'>=</span> <span class='va'>type</span>, values_from <span class='op'>=</span> <span class='va'>entry</span><span class='op'>)</span>
+
+  <span class='va'>df_list</span><span class='op'>[[</span><span class='va'>num</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>df_temp</span>
+  <span class='va'>num</span> <span class='op'>&lt;-</span> <span class='va'>num</span><span class='op'>+</span><span class='fl'>1</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>bind all dataframes in the list</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>rbind.fill</span>,<span class='va'>df_list</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h4 id="data-cleaning-and-pre-processing">Data cleaning and pre-processing</h4>
+<ol type="1">
+<li>check data types</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>glimpse</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Rows: 845
+Columns: 8
+$ news_no   &lt;chr&gt; &quot;121&quot;, &quot;135&quot;, &quot;152&quot;, &quot;154&quot;, &quot;237&quot;, &quot;251&quot;, &quot;341&quot;, …
+$ SOURCE    &lt;chr&gt; &quot;All News Today&quot;, &quot;All News Today&quot;, &quot;All News Tod…
+$ TITLE     &lt;chr&gt; &quot;POK PROTESTS END IN ARRESTS&quot;, &quot;RALLY SCHEDULED I…
+$ PUBLISHED &lt;chr&gt; &quot;2005/04/06&quot;, &quot;2012/04/09&quot;, &quot;1993/02/02&quot;, &quot;1998/0…
+$ LOCATION  &lt;chr&gt; &quot;ELODIS, Kronos&quot;, &quot;ABILA, Kronos&quot;, &quot;ABILA, Kronos…
+$ TEXT      &lt;chr&gt; &quot;Fifteen members of the Protectors of Kronos (POK…
+$ AUTHOR    &lt;chr&gt; NA, NA, NA, &quot;Petrus Gerhard&quot;, NA, NA, NA, NA, NA,…
+$ NOTE      &lt;chr&gt; NA, NA, NA, &quot;This article is the first in a serie…</code></pre>
+</div>
+<p>convert “published” to datetime, it is currently a character and format all to unify the format</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>formats</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"%d %B %Y"</span>,<span class='st'>"%d%B %Y"</span>,<span class='st'>"%B %d, %Y"</span>,<span class='st'>"%Y/%m%d"</span><span class='op'>)</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span><span class='va'>df</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>date <span class='op'>=</span> <span class='fu'>parse_date_time</span><span class='op'>(</span><span class='va'>PUBLISHED</span>, <span class='va'>formats</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>convert Doc_id to int</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span><span class='op'>$</span><span class='va'>news_no</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>news_no</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>convert date to date format</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span><span class='op'>$</span><span class='va'>date</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.POSIXlt.html'>as.POSIXct</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>date</span>,tz<span class='op'>=</span><span class='st'>"GMT"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>change column name and adjust column order in order to load to corpus</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Doc_id"</span>,<span class='st'>"Source"</span>,<span class='st'>"Title"</span>,<span class='st'>"Published"</span>,<span class='st'>"Location"</span>,<span class='st'>"Text"</span>,<span class='st'>"Author"</span>,<span class='st'>"Note"</span>,<span class='st'>"date"</span><span class='op'>)</span>
+<span class='va'>df_corpus</span> <span class='op'>&lt;-</span> <span class='va'>df</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Doc_id"</span>,<span class='st'>"Text"</span>,<span class='st'>"Source"</span>,<span class='st'>"Title"</span>,<span class='st'>"Author"</span>,<span class='st'>"date"</span>,<span class='st'>"Location"</span>,<span class='st'>"Note"</span><span class='op'>)</span><span class='op'>]</span>
+</code></pre>
+</div>
+</div>
+<p>use quanteda to load corpus and clean the corpus by removing stopwords and punctuations. Calculate cosine similarity between each pair of document and convert to a dataframe.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>news_corpus</span> <span class='op'>&lt;-</span> <span class='fu'>corpus</span><span class='op'>(</span><span class='va'>df_corpus</span>, docid_field<span class='op'>=</span><span class='st'>"Doc_id"</span>, text_field<span class='op'>=</span><span class='st'>"Text"</span><span class='op'>)</span>
+<span class='va'>clean_corpus</span> <span class='op'>&lt;-</span> <span class='fu'>dfm</span><span class='op'>(</span><span class='va'>news_corpus</span>, remove<span class='op'>=</span><span class='fu'>stopwords</span><span class='op'>(</span><span class='st'>"english"</span><span class='op'>)</span>, remove_punct<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'>textstat_simil</span><span class='op'>(</span><span class='va'>clean_corpus</span>, margin<span class='op'>=</span><span class='st'>"document"</span>, method<span class='op'>=</span><span class='st'>"cosine"</span><span class='op'>)</span>
+<span class='va'>sim_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>sim</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>change document1 and document2 to integer</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sim_df</span><span class='op'>$</span><span class='va'>document1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>sim_df</span><span class='op'>$</span><span class='va'>document1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>sim_df</span><span class='op'>$</span><span class='va'>document2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>sim_df</span><span class='op'>$</span><span class='va'>document2</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>create a table of source for merging later</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df_source</span> <span class='op'>&lt;-</span> <span class='va'>df_corpus</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='va'>Doc_id</span>,<span class='va'>Source</span>,<span class='va'>date</span><span class='op'>)</span> 
+</code></pre>
+</div>
+</div>
+<p>swap doc1 and doc2 id to make doc1 date always earlier than doc2 date. add rowid as pair_id, split to 200 bins as ranking based on cosine, highest cosine value indicates highest rank, and highest similarity</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sim_tmp</span> <span class='op'>&lt;-</span> <span class='va'>sim_df</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>rowid_to_column</span><span class='op'>(</span>var<span class='op'>=</span><span class='st'>"pair_id"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>rank<span class='op'>=</span><span class='fu'>ntile</span><span class='op'>(</span><span class='va'>cosine</span>,<span class='fl'>200</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>rank</span><span class='op'>==</span><span class='fl'>200</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>df_source</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"document1"</span><span class='op'>=</span><span class='st'>"Doc_id"</span><span class='op'>)</span>, suffix<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1"</span>,<span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>df_source</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"document2"</span><span class='op'>=</span><span class='st'>"Doc_id"</span><span class='op'>)</span>, suffix<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1"</span>,<span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Source1</span> <span class='op'>!=</span> <span class='va'>Source2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>date1</span> <span class='op'>!=</span> <span class='va'>date2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/transform.html'>transform</a></span><span class='op'>(</span>document1<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>date1</span><span class='op'>&lt;=</span><span class='va'>date2</span>, <span class='va'>document1</span>, <span class='va'>document2</span><span class='op'>)</span>,
+            document2<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>date1</span><span class='op'>&lt;=</span><span class='va'>date2</span>, <span class='va'>document2</span>, <span class='va'>document1</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/transform.html'>transform</a></span><span class='op'>(</span>Source1<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>date1</span><span class='op'>&lt;=</span><span class='va'>date2</span>, <span class='va'>Source1</span>, <span class='va'>Source2</span><span class='op'>)</span>,
+            Source2<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>date1</span><span class='op'>&lt;=</span><span class='va'>date2</span>, <span class='va'>Source2</span>, <span class='va'>Source1</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>since doc 1 is published earlier than doc2, here we assume doc1 is primary news and the matching doc2 is the secondary news. Count the number of primary and secondary news in each news source and label them as primary or secondary.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df_primary</span> <span class='op'>&lt;-</span> <span class='va'>sim_tmp</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>rank</span><span class='op'>==</span><span class='fl'>200</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>df_source</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"document1"</span><span class='op'>=</span><span class='st'>"Doc_id"</span><span class='op'>)</span>, suffix<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1"</span>,<span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>df_source</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"document2"</span><span class='op'>=</span><span class='st'>"Doc_id"</span><span class='op'>)</span>, suffix<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1"</span>,<span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>Source1</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>count</span><span class='op'>(</span><span class='va'>document1</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>role<span class='op'>=</span><span class='st'>"primary"</span><span class='op'>)</span> 
+
+<span class='va'>df_secondary</span> <span class='op'>&lt;-</span> <span class='va'>sim_tmp</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>rank</span><span class='op'>==</span><span class='fl'>200</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>df_source</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"document1"</span><span class='op'>=</span><span class='st'>"Doc_id"</span><span class='op'>)</span>, suffix<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1"</span>,<span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>df_source</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"document2"</span><span class='op'>=</span><span class='st'>"Doc_id"</span><span class='op'>)</span>, suffix<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1"</span>,<span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>Source2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>count</span><span class='op'>(</span><span class='va'>document2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>role<span class='op'>=</span><span class='st'>"secondary"</span><span class='op'>)</span> 
+
+<span class='va'>df_join</span> <span class='op'>&lt;-</span> <span class='va'>df_corpus</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>df_primary</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Doc_id"</span><span class='op'>=</span><span class='st'>"document1"</span><span class='op'>)</span>, suffix<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"_pri"</span>,<span class='st'>"_sec"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>df_secondary</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Doc_id"</span><span class='op'>=</span><span class='st'>"document2"</span><span class='op'>)</span>, suffix<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"_pri"</span>,<span class='st'>"_sec"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>Source1</span>,<span class='op'>-</span><span class='va'>Source2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>unite</span><span class='op'>(</span><span class='st'>"role"</span>, <span class='va'>n_pri</span>, <span class='va'>role_pri</span>, <span class='va'>n_sec</span>, <span class='va'>role_sec</span>, sep<span class='op'>=</span><span class='st'>"_"</span>,na.rm<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'>glimpse</span><span class='op'>(</span><span class='va'>df_join</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Rows: 845
+Columns: 9
+$ Doc_id   &lt;int&gt; 121, 135, 152, 154, 237, 251, 341, 391, 420, 554, …
+$ Text     &lt;chr&gt; &quot;Fifteen members of the Protectors of Kronos (POK)…
+$ Source   &lt;chr&gt; &quot;All News Today&quot;, &quot;All News Today&quot;, &quot;All News Toda…
+$ Title    &lt;chr&gt; &quot;POK PROTESTS END IN ARRESTS&quot;, &quot;RALLY SCHEDULED IN…
+$ Author   &lt;chr&gt; NA, NA, NA, &quot;Petrus Gerhard&quot;, NA, NA, NA, NA, NA, …
+$ date     &lt;date&gt; 2005-04-06, 2012-04-09, 1993-02-02, 1998-03-20, 1…
+$ Location &lt;chr&gt; &quot;ELODIS, Kronos&quot;, &quot;ABILA, Kronos&quot;, &quot;ABILA, Kronos&quot;…
+$ Note     &lt;chr&gt; NA, NA, NA, &quot;This article is the first in a series…
+$ role     &lt;chr&gt; &quot;1_primary_1_secondary&quot;, &quot;4_primary&quot;, &quot;3_primary&quot;,…</code></pre>
+</div>
+<p>create nodes list and edges list for visualizing dependancies network between sources</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sim_nodes</span> <span class='op'>&lt;-</span> <span class='va'>df_source</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>distinct</span><span class='op'>(</span><span class='va'>Source</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>rename</span><span class='op'>(</span>label<span class='op'>=</span><span class='va'>Source</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>rowid_to_column</span><span class='op'>(</span><span class='st'>"id"</span><span class='op'>)</span>
+
+<span class='va'>sim_edges</span> <span class='op'>&lt;-</span> <span class='va'>sim_tmp</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>Source1</span>, <span class='va'>Source2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>summarise</span><span class='op'>(</span>weight<span class='op'>=</span><span class='fu'>n</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>sim_nodes</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Source1"</span><span class='op'>=</span><span class='st'>"label"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>rename</span><span class='op'>(</span>from<span class='op'>=</span><span class='va'>id</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>sim_nodes</span>, by<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Source2"</span><span class='op'>=</span><span class='st'>"label"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>rename</span><span class='op'>(</span>to<span class='op'>=</span><span class='va'>id</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select</span><span class='op'>(</span><span class='va'>from</span>, <span class='va'>to</span>, <span class='va'>weight</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>visualize dependancies between sources in a network graph</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>visNetwork</span><span class='op'>(</span><span class='va'>sim_nodes</span>, <span class='va'>sim_edges</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>visEdges</span><span class='op'>(</span>arrows <span class='op'>=</span> <span class='st'>'middle'</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>visOptions</span><span class='op'>(</span>highlightNearest <span class='op'>=</span> <span class='cn'>TRUE</span>, nodesIdSelection <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>visIgraphLayout</span><span class='op'>(</span>layout<span class='op'>=</span><span class='st'>"layout_in_circle"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div id="htmlwidget-73926e2780fdc0c2e7ab" style="width:624px;height:384px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-73926e2780fdc0c2e7ab">{"x":{"nodes":{"id":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],"label":["All News Today","Athena Speaks","Central Bulletin","Centrum Sentinel","Daily Pegasus","Everyday News","Homeland Illumination","International News","International Times","Kronos Star","Modern Rubicon","News Desk","News Online Today","Tethys News","The Abila Post","The Continent","The Explainer","The General Post","The Guide","The Light of Truth","The Orb","The Truth","The Tulip","The World","The Wrap","Who What News","World Journal","World Source","Worldwise"],"x":[1,0.976551828617438,0.907303724902832,0.795493653222135,0.646349728259169,0.466845754183635,0.265375137318966,0.0513584197912478,-0.165197214550422,-0.374165864928528,-0.565776389503363,-0.73106929310561,-0.862315663272695,-0.95337856560547,-1,-1,-0.95337856560547,-0.862315663272695,-0.73106929310561,-0.565776389503363,-0.374165864928528,-0.165197214550422,0.0513584197912478,0.265375137318967,0.466845754183635,0.646349728259169,0.795493653222135,0.907303724902832,0.976551828617438],"y":[0,0.215286175934694,0.420505809556081,0.606063058881266,0.763281473163873,0.884809694087763,0.964965197111454,1,0.988275914308719,0.930341145254151,0.828904658247415,0.68870951068239,0.516311071843499,0.319770501123747,0.108277817170835,-0.108277817170835,-0.319770501123747,-0.516311071843499,-0.68870951068239,-0.828904658247415,-0.930341145254151,-0.988275914308719,-1,-0.964965197111454,-0.884809694087763,-0.763281473163872,-0.606063058881266,-0.420505809556082,-0.215286175934695]},"edges":{"from":[1,1,1,1,2,2,3,3,3,3,5,5,5,6,6,6,7,7,7,7,7,8,8,8,8,8,8,8,8,9,9,9,9,9,10,10,10,10,10,10,10,10,10,10,12,12,12,12,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,15,15,15,15,15,15,16,16,17,17,17,18,18,18,18,18,19,19,19,19,20,20,20,20,20,20,21,21,21,22,22,22,22,23,23,23,24,24,24,24,24,24,24,24,24,25,25,25,26,26,26,26,26,26,26,26,26,27,27,27,28,28,28,28,29,29,29,29],"to":[5,13,21,25,12,17,2,12,13,17,7,21,25,16,27,28,1,5,13,21,25,3,10,13,15,17,19,22,29,6,13,16,27,28,2,3,8,12,13,15,17,19,22,29,2,15,17,22,1,2,3,5,6,7,8,10,12,15,16,17,18,19,20,21,22,23,25,26,27,29,2,3,12,13,17,29,6,27,2,12,15,2,15,17,20,23,2,17,22,29,2,12,15,17,18,23,5,7,25,12,13,19,29,12,18,20,2,12,13,15,17,18,20,23,26,5,7,21,2,3,12,13,15,17,18,20,23,6,16,28,6,13,16,27,2,13,19,22],"weight":[14,4,14,11,4,3,11,10,1,10,1,8,6,1,2,1,13,28,21,28,27,2,1,6,1,1,10,10,11,10,10,12,11,2,1,2,11,2,22,3,1,22,23,23,6,1,4,1,1,8,7,6,4,1,1,1,6,2,2,7,6,9,6,7,6,3,5,3,2,3,18,14,18,13,18,1,3,3,6,5,1,1,1,1,1,2,1,1,3,5,1,1,1,1,5,4,9,1,7,3,1,6,5,1,5,4,1,1,10,1,1,15,15,14,9,8,1,8,1,1,1,1,1,1,10,8,6,3,2,1,5,4,6,6,4,1,8,6]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"arrows":"middle","smooth":false},"physics":{"stabilization":false}},"groups":null,"width":null,"height":null,"idselection":{"enabled":true,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"igraphlayout":{"type":"square"}},"evals":[],"jsHooks":[]}</script>
+</div>
+<h4 id="stopped-here">stopped here</h4>
+<p>use corporaexplore to visualiza all primary and secondary sources.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>dashboard</span> <span class='op'>&lt;-</span> <span class='fu'>prepare_data</span><span class='op'>(</span>
+  dataset <span class='op'>=</span> <span class='va'>df_join</span>,
+  date_based_corpus <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  columns_doc_info<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Doc_id"</span>,<span class='st'>"Title"</span>,<span class='st'>"Author"</span>, <span class='st'>"date"</span>, <span class='st'>"Location"</span><span class='op'>)</span>,
+  grouping_variable <span class='op'>=</span> <span class='st'>"Source"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>saveRDS</a></span><span class='op'>(</span><span class='va'>dashboard</span>, <span class='st'>"/dashboard/corpus_dashboard.rds"</span>, compress <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>click <a href="https://xiaozhumao.shinyapps.io/dashboard/">here</a> to view the shiny app</p>
+<iframe src=" https://xiaozhumao.shinyapps.io/dashboard/" style="border: 1px solid black; width: 100%; height: 500px;">
+</iframe>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

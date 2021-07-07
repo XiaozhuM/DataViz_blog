@@ -11,7 +11,7 @@ output:
     self_contained: false
     toc: true
     toc_float: true
-draft: true
+draft: False
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
@@ -207,6 +207,15 @@ visNetwork(sim_nodes, sim_edges) %>%
 #### stopped here
 use corporaexplore to visualiza all primary and secondary sources.
 
+```{r eval=FALSE, warning=FALSE, include=TRUE}
+dashboard <- prepare_data(
+  dataset = df_join,
+  date_based_corpus = FALSE,
+  columns_doc_info=c("Doc_id","Title","Author", "date", "Location"),
+  grouping_variable = "Source")
+
+saveRDS(dashboard, "/dashboard/corpus_dashboard.rds", compress = FALSE)
+```
 
 
 click [here](https://xiaozhumao.shinyapps.io/dashboard/) to view the shiny app
