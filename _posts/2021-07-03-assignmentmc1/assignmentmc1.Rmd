@@ -174,7 +174,57 @@ df_join <- df_corpus %>%
 
 glimpse(df_join)
 ```
-create nodes list and edges list for visualizing dependancies network between sources
+
+get all the documents that are similar, similar_later are the documents with later published date, similar_earlier are the documents with earlier published date. This information will be used to enable easy search and compare of document.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+pair_pri <- sim_tmp %>%
+  select(cosine,pair_id,document1,document2) %>%
+  group_by(document1) %>%
+  arrange(document1,desc(cosine)) %>%
+  summarize(similar_later=paste(document2, collapse="_"))
+
+pair_sec <- sim_tmp %>%
+  select(cosine,pair_id,document1,document2) %>%
+  group_by(document2) %>%
+  arrange(document2,desc(cosine)) %>%
+  summarize(similar_earlier=paste(document1, collapse="_"))
+
+df_join <- df_join %>%
+  left_join(pair_pri, by=c("Doc_id"="document1")) %>%
+  left_join(pair_sec, by=c("Doc_id"="document2"))
+
+glimpse(df_join)
+```
+
+use corporaexplore to visualiza all primary and secondary sources.
+
+```{r eval=FALSE, warning=FALSE, message=FALSE, include=TRUE}
+dashboard <- prepare_data(
+  dataset = df_join,
+  date_based_corpus = FALSE,
+  columns_doc_info=c("Doc_id","Title","Author", "date", "Location",
+                     "role","similar_later", "similar_earlier"),
+  grouping_variable = "Source")
+
+saveRDS(dashboard, "./dashboard/corpus_dashboard.rds", compress = FALSE)
+```
+
+```{r echo=FALSE, eval=FALSE, include=TRUE}
+library(rsconnect)
+rsconnect::deployApp('/Users/xiaozhumao/XiaozhuM/DataViz_blog/_posts/2021-07-03-assignmentmc1/dashboard')
+```
+
+
+click [here](https://xiaozhumao.shinyapps.io/dashboard/) to view the shiny app
+
+<iframe src=" https://xiaozhumao.shinyapps.io/dashboard/"
+        style="border: 1px solid black; width: 100%; height: 500px;">
+        </iframe>
+
+
+
+Next, create nodes list and edges list for visualizing dependancies network between sources
 
 ```{r warning=FALSE}
 sim_nodes <- df_source %>%
@@ -193,7 +243,21 @@ sim_edges <- sim_tmp %>%
   select(from, to, weight)
 ```
 
-visualize dependancies between sources in a network graph
+visualize dependencies between sources in a network graph
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+sim_table <- sim_tmp %>%
+  group_by(Source1, Source2) %>%
+  summarise(similar_doc_count=n()) %>%
+  left_join(sim_nodes, by=c("Source1"="label")) %>%
+  left_join(sim_nodes, by=c("Source2"="label")) %>%
+  select(Source1, Source2, similar_doc_count) %>%
+  filter(similar_doc_count>=10) %>%
+  arrange(desc(similar_doc_count))
+  
+view(sim_table)
+
+```
 
 ```{r echo=TRUE, warning=FALSE}
 visNetwork(sim_nodes, sim_edges) %>%
@@ -205,24 +269,7 @@ visNetwork(sim_nodes, sim_edges) %>%
 
 
 #### stopped here
-use corporaexplore to visualiza all primary and secondary sources.
 
-```{r eval=FALSE, warning=FALSE, include=TRUE}
-dashboard <- prepare_data(
-  dataset = df_join,
-  date_based_corpus = FALSE,
-  columns_doc_info=c("Doc_id","Title","Author", "date", "Location"),
-  grouping_variable = "Source")
-
-saveRDS(dashboard, "/dashboard/corpus_dashboard.rds", compress = FALSE)
-```
-
-
-click [here](https://xiaozhumao.shinyapps.io/dashboard/) to view the shiny app
-
-<iframe src=" https://xiaozhumao.shinyapps.io/dashboard/"
-        style="border: 1px solid black; width: 100%; height: 500px;">
-        </iframe>
 
 
 

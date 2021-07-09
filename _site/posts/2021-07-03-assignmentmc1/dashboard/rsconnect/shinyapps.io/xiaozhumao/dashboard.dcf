@@ -5,7 +5,7 @@ account: xiaozhumao
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4361940
-bundleId: 4796218
+bundleId: 4802275
 url: https://xiaozhumao.shinyapps.io/dashboard/
-when: 1625671506.46003
-lastSyncTime: 1625671506.46006
+when: 1625815842.35335
+lastSyncTime: 1625815842.35403
