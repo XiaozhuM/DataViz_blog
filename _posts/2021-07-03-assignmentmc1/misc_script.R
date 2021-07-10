@@ -130,6 +130,7 @@ sim_dashboard <- prepare_data(
                      "Location_2", "Text_2"),
   grouping_variable = "Source_1"
 )
+<<<<<<< HEAD
 
 
 ```{r eval=FALSE, warning=FALSE, include=TRUE}
@@ -432,9 +433,12 @@ sim_table <- sim_tmp %>%
   arrange(desc(similar_doc_count))
 
 view(sim_table)
+=======
+>>>>>>> parent of 2acbfea (add chord diag)
 
 ```
 
+<<<<<<< HEAD
 ```{r echo=TRUE, warning=FALSE}
 visNetwork(sim_nodes, sim_edges) %>%
   visEdges(arrows = 'middle') %>%
@@ -553,7 +557,25 @@ chorddiag(email_matrix2,
 
 
 
+=======
+```{r eval=FALSE, warning=FALSE, include=TRUE}
+dashboard <- prepare_data(
+  dataset = df_join,
+  date_based_corpus = FALSE,
+  columns_doc_info=c("Doc_id","Title","Author", "date", "Location"),
+  grouping_variable = "Source")
 
+saveRDS(dashboard, "/dashboard/corpus_dashboard.rds", compress = FALSE)
+```
+>>>>>>> parent of 2acbfea (add chord diag)
 
+```{r echo=FALSE, eval=FALSE, include=TRUE}
+library(rsconnect)
+rsconnect::deployApp('/Users/xiaozhumao/XiaozhuM/DataViz_blog/_posts/2021-07-03-assignmentmc1/dashboard')
+```
+
+<iframe src=" https://xiaozhumao.shinyapps.io/dashboard/"
+style="border: 1px solid black; width: 100%; height: 500px;">
+  </iframe>
 
 

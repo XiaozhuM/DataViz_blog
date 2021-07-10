@@ -18,6 +18,9 @@ draft: True
     toc: true
     toc_float: true
 draft: False
+<<<<<<< HEAD
+>>>>>>> parent of 2acbfea (add chord diag)
+=======
 >>>>>>> parent of 2acbfea (add chord diag)
 ---
   ```{r setup, include=FALSE}
@@ -283,6 +286,7 @@ visNetwork(sim_nodes, sim_edges) %>%
 
 
 #### stopped here
+<<<<<<< HEAD
 
 
 
@@ -298,6 +302,18 @@ email_matrix <- GAStech_edges_aggregated %>%
 email_matrix <- graph.data.frame(email_matrix, directed=TRUE)
 email_matrix <- get.adjacency(email_matrix, attr="n", sparse=TRUE)
 =======
+>>>>>>> parent of 2acbfea (add chord diag)
+=======
+
+
+
+
+
+
+
+
+
+
 >>>>>>> parent of 2acbfea (add chord diag)
 
 
