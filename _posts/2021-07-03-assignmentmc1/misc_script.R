@@ -122,26 +122,6 @@ sim_tmp2 <- sim_tmp %>%
 
 colnames(sim_tmp2)[colnames(sim_tmp2) == 'Text_1'] <- 'Text'
 
-pair_pri <- sim_tmp %>%
-  select(cosine,pair_id,document1,document2) %>%
-  group_by(document1) %>%
-  arrange(document1,desc(cosine)) %>%
-  summarize(similar_later=paste(document2, collapse="_"))
-
-pair_sec <- sim_tmp %>%
-  select(cosine,pair_id,document1,document2) %>%
-  group_by(document2) %>%
-  arrange(document2,desc(cosine)) %>%
-  summarize(similair_earlier=paste(document1, collapse="_"))
-
-df_join <- df_join %>%
-  left_join(pair_pri, by=c("Doc_id"="document1")) %>%
-  left_join(pair_sec, by=c("Doc_id"="document2"))
-  
-
-
-
-
 sim_dashboard <- prepare_data(
   dataset = sim_tmp2,
   date_based_corpus = FALSE,
@@ -152,45 +132,24 @@ sim_dashboard <- prepare_data(
 )
 
 
+```{r eval=FALSE, warning=FALSE, include=TRUE}
+dashboard <- prepare_data(
+  dataset = df_join,
+  date_based_corpus = FALSE,
+  columns_doc_info=c("Doc_id","Title","Author", "date", "Location"),
+  grouping_variable = "Source")
 
-#----------------------------bias--------------
-source <- c("Homeland Illumination")
+saveRDS(dashboard, "/dashboard/corpus_dashboard.rds", compress = FALSE)
+```
 
-POK_corpus <- df_corpus %>%
-  filter(str_detect(Text, 'Elian Karel')) %>%
-  group_by(Source) %>%
-  filter(Source==source)
+```{r echo=FALSE, eval=FALSE, include=TRUE}
+library(rsconnect)
+rsconnect::deployApp('/Users/xiaozhumao/XiaozhuM/DataViz_blog/_posts/2021-07-03-assignmentmc1/dashboard')
+```
 
-stopwords <- c(stopwords("english"),"pok","kronos","protectors", "elodis",
-               "years", "many","homeland","illumination","abila","several",
-               "today","people", "elian", "karel")
-
-POK_dfm <- dfm(corpus(POK_corpus, docid_field="Doc_id", text_field="Text"), 
-                  remove=stopwords, remove_punct=TRUE)
-POK_dfm <- dfm_trim(POK_dfm, min_termfreq = 4, max_docfreq = 10)
-
-#POK_corpus <- kwic(news_corpus, "POK")
-
-POK_lda_HI <- stm(POK_dfm, K = 5, verbose = FALSE)
-plot(POK_lda_HI)    
-
-
-#use udpipe
-ud_model <- udpipe_download_model(language = "english")
-ud_model <- udpipe_load_model(ud_model$file_model)
-POK_pos <- udpipe_annotate(ud_model, x = POK_corpus$Text, doc_id = POK_corpus$Doc_id)
-
-POK_pos <- as.data.frame(POK_pos)
-tag <- c("JJ","VB")
-
-POK_words <- POK_pos %>%
-  filter(str_detect(xpos, tag)) %>%
-  select(lemma) %>%
-  group_by(lemma) %>%
-  summarise(n=n()) %>%
-  arrange(desc(n))
-
-
+<iframe src=" https://xiaozhumao.shinyapps.io/dashboard/"
+style="border: 1px solid black; width: 100%; height: 500px;">
+  </iframe>
 
 #-------------email header network------------
 email_matrix <- GAStech_edges %>%

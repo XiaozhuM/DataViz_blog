@@ -8,10 +8,17 @@ url: {}
 date: 07-03-2021
 output:
   distill::distill_article:
+<<<<<<< HEAD
   self_contained: false
 toc: true
 toc_float: true
 draft: True
+=======
+    self_contained: false
+    toc: true
+    toc_float: true
+draft: False
+>>>>>>> parent of 2acbfea (add chord diag)
 ---
   ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
@@ -23,9 +30,7 @@ The packages will be used in the assignment.
 
 ```{r tidy=TRUE}
 packages = c('stringr', 'tidyr','plyr','tidyverse', 'tm', 'lubridate', 
-             'corporaexplorer', 'quanteda','quanteda.textstats',"igraph",
-             "visNetwork", "tidygraph", "ggraph",
-             "networkD3", "stm")
+             'corporaexplorer', 'quanteda','quanteda.textstats', "visNetwork", "networkD3")
 for (p in packages){
   if(!require(p, character.only = T)){
     install.packages(p)
@@ -58,8 +63,7 @@ for (i in list_of_paper){
                    stringsAsFactors = FALSE))
   
   df_temp <- do.call(rbind, temp)
-  df_temp[,c("type","entry")] <-
-    str_trim(str_split_fixed(df_temp$rawdata,":",2))
+  df_temp[,c("type","entry")] <- str_trim(str_split_fixed(df_temp$rawdata,":",2))
   
   df_temp <- df_temp[,c("news_no","type","entry")]
   df_temp <- pivot_wider(df_temp, names_from = type, values_from = entry)
@@ -214,18 +218,27 @@ saveRDS(dashboard, "./dashboard/corpus_dashboard.rds", compress = FALSE)
 ```
 
 ```{r echo=FALSE, eval=FALSE, include=TRUE}
-#deploy app to shiny.io
 library(rsconnect)
 rsconnect::deployApp('/Users/xiaozhumao/XiaozhuM/DataViz_blog/_posts/2021-07-03-assignmentmc1/dashboard')
 ```
 
+
 click [here](https://xiaozhumao.shinyapps.io/dashboard/) to view the shiny app
 
 <iframe src=" https://xiaozhumao.shinyapps.io/dashboard/"
+<<<<<<< HEAD
 style="border: 1px solid black; width: 100%; height: 500px;">
   </iframe>
   
   Next, create nodes list and edges list for visualizing dependancies network between sources
+=======
+        style="border: 1px solid black; width: 100%; height: 500px;">
+        </iframe>
+
+
+
+Next, create nodes list and edges list for visualizing dependancies network between sources
+>>>>>>> parent of 2acbfea (add chord diag)
 
 ```{r warning=FALSE}
 sim_nodes <- df_source %>%
@@ -270,62 +283,12 @@ visNetwork(sim_nodes, sim_edges) %>%
 
 
 #### stopped here
-install chorddiag and load library
 
-```{r}
-devtools::install_github("mattflor/chorddiag")
-library(chorddiag)
-```
 
-read in email headers node and edge
 
-```{r message=FALSE}
-GAStech_nodes <- read_csv("MC1/data/GAStech_email_node.csv")
-GAStech_edges <- read_csv("MC1/data/GAStech_email_edge.csv")
-```
 
-because all emails were sent in 2014 Jan, additional column is created for day of month. This will be used to visualize the number of emails in each day by each sender, considering a email will be sent to multiple receiver.
 
-```{r}
-GAStech_edges_aggregated <- GAStech_edges %>%
-  filter(source!=target) %>%
-  transform(SentDate=dmy(SentDate)) %>%
-  mutate(day=day(SentDate)) %>%
-  separate(Subject, c("type","Subject"), ":") %>%
-  transform(Subject=ifelse(type=="RE", Subject, type),
-            type=ifelse(type=="RE", "reply", "direct"))
-```
-
-Manipulate table to detect any employee who sends email to all employees, i.e. send to 54 recipients. Group the records by source, day, type, subject and main subject. The table below indicates that only 2 people who send to the whole company, Mat Bramar and Ruscella Mies Haber. They both work in administration department. Mat is assistant to CEO. From the subjects, we can conlude that he regularly sends announcement, reminders, and matters that relate to the whole company, such as "All staff announcement" and "Changes to travel policy".
-
-Ruscella is assistant to engineering group manager. She sends only 2 types of emails to the whole company, "Daily morning announcements" and "Good morning, GasTech!" Both are daily news updates for the whole company to read. 
-
-```{r message=FALSE}
-email_eachday <- GAStech_edges_aggregated %>%
-  group_by(source, day, type, Subject, MainSubject) %>%
-  summarise(n=n()) %>%
-  filter(n==53) %>%
-  select(source, day, Subject) %>%
-  arrange(source,Subject)
-```
-
-preparation for constructing graph. 2 chunks below are not used now. 
-
-```{r}
-GAStech_edges_1 <- GAStech_edges_aggregated %>%
-  group_by(source, target, day) %>%
-  summarise(weight=n()) %>%
-  left_join(GAStech_nodes, by=c("source"="label"), suffix=c(".from", ".to")) %>%
-  left_join(GAStech_nodes, by=c("target"="label"),suffix=c(".from", ".to")) %>%
-  rename(from=id.from, to=id.to) %>%
-  ungroup() %>%
-  select(from, to, day,weight) 
-```
-
-```{r}
-GAStech_graph <- tbl_graph(nodes=GAStech_nodes, edges=GAStech_edges_1)
-```
-
+<<<<<<< HEAD
 ```{r echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
 email_matrix <- GAStech_edges_aggregated %>%
   select(source, target) %>%
@@ -334,41 +297,11 @@ email_matrix <- GAStech_edges_aggregated %>%
 
 email_matrix <- graph.data.frame(email_matrix, directed=TRUE)
 email_matrix <- get.adjacency(email_matrix, attr="n", sparse=TRUE)
+=======
+>>>>>>> parent of 2acbfea (add chord diag)
 
-chorddiag(as.matrix(email_matrix), 
-          width=500, height=500,
-          groupnamePadding=20, groupPadding=3, groupnameFontsize=10, 
-          showTicks=FALSE)
 
-```
 
-There is a large number of emails sent from and received by Mat Bramar and Ruscella Mie Haber. This is because they are responsible for administrative task, such as sending announcements and reminder. 
 
-Next, we will remove the reminder and announcement emails that were sent to all employees for better interpretation of the emails.This includes both directed email and reply emails to all. 
 
-```{r}
-GAStech_edges2 <- email_eachday %>%
-  mutate(delete="yes") %>%
-  right_join(GAStech_edges_aggregated, by=c("source"="source",
-                                            "Subject"="Subject",
-                                            "type"="type",
-                                            "day"="day")) %>%
-  filter(is.na(delete)) 
-```
-```{r}
-email_matrix2 <- GAStech_edges2 %>%
-  filter(type=="direct") %>%
-  select(source, target) %>%
-  group_by(source, target) %>%
-  summarise(n=n()) 
-
-email_matrix2 <- as.matrix(get.adjacency(graph.data.frame(
-  email_matrix2, directed=TRUE),
-  attr="n", sparse=TRUE))
-
-chorddiag(email_matrix2, 
-          width=500, height=500,
-          groupnamePadding=20, groupPadding=3, groupnameFontsize=10, 
-          showTicks=FALSE)
-```
 
