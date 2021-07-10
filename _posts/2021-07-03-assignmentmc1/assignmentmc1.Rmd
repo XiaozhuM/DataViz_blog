@@ -4,16 +4,16 @@ description: |
   A short description of the post.
 author:
   - name: Xiaozhu Mao
-    url: {}
+url: {}
 date: 07-03-2021
 output:
   distill::distill_article:
-    self_contained: false
-    toc: true
-    toc_float: true
+  self_contained: false
+toc: true
+toc_float: true
 draft: True
 ---
-```{r setup, include=FALSE}
+  ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
 ```  
 
@@ -28,9 +28,9 @@ packages = c('stringr', 'tidyr','plyr','tidyverse', 'tm', 'lubridate',
              "networkD3", "stm")
 for (p in packages){
   if(!require(p, character.only = T)){
-  install.packages(p)
+    install.packages(p)
   }
-library(p,character.only = T)
+  library(p,character.only = T)
 }
 ```  
 
@@ -50,20 +50,20 @@ df_list <- list()
 num <- 1
 for (i in list_of_paper){
   temp <- lapply(i, readLines)
-
+  
   temp <- lapply(1:length(temp),
-                   function(j) data.frame(
-                          news_no=str_extract(i, "(?<=\\/)\\d+"),
-                          rawdata=temp[[j]],
-                          stringsAsFactors = FALSE))
-                   
+                 function(j) data.frame(
+                   news_no=str_extract(i, "(?<=\\/)\\d+"),
+                   rawdata=temp[[j]],
+                   stringsAsFactors = FALSE))
+  
   df_temp <- do.call(rbind, temp)
   df_temp[,c("type","entry")] <-
     str_trim(str_split_fixed(df_temp$rawdata,":",2))
   
   df_temp <- df_temp[,c("news_no","type","entry")]
   df_temp <- pivot_wider(df_temp, names_from = type, values_from = entry)
-
+  
   df_list[[num]] <- df_temp
   num <- num+1
 }
@@ -222,10 +222,10 @@ rsconnect::deployApp('/Users/xiaozhumao/XiaozhuM/DataViz_blog/_posts/2021-07-03-
 click [here](https://xiaozhumao.shinyapps.io/dashboard/) to view the shiny app
 
 <iframe src=" https://xiaozhumao.shinyapps.io/dashboard/"
-        style="border: 1px solid black; width: 100%; height: 500px;">
-        </iframe>
-
-Next, create nodes list and edges list for visualizing dependancies network between sources
+style="border: 1px solid black; width: 100%; height: 500px;">
+  </iframe>
+  
+  Next, create nodes list and edges list for visualizing dependancies network between sources
 
 ```{r warning=FALSE}
 sim_nodes <- df_source %>%
@@ -255,7 +255,7 @@ sim_table <- sim_tmp %>%
   select(Source1, Source2, similar_doc_count) %>%
   filter(similar_doc_count>=10) %>%
   arrange(desc(similar_doc_count))
-  
+
 view(sim_table)
 
 ```
@@ -331,7 +331,7 @@ email_matrix <- GAStech_edges_aggregated %>%
   select(source, target) %>%
   group_by(source, target) %>%
   summarise(n=n()) 
-  
+
 email_matrix <- graph.data.frame(email_matrix, directed=TRUE)
 email_matrix <- get.adjacency(email_matrix, attr="n", sparse=TRUE)
 
@@ -371,9 +371,4 @@ chorddiag(email_matrix2,
           groupnamePadding=20, groupPadding=3, groupnameFontsize=10, 
           showTicks=FALSE)
 ```
-
-
-
-
-
 
