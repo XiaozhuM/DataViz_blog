@@ -13,16 +13,23 @@ toc: true
 toc_float: true
 draft: FALSE
 ---
-  ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
+```{r}
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\n \\", options$size,"\n\n", x, "\n\n \\normalsize"), x)})
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE)
 ```  
 
-#### Loading in packages 
+## Loading in packages 
 
 The packages will be used in the assignment. 
 
 ```{r tidy=TRUE}
-packages = c('stringr', 'tidyr','plyr','tidyverse', 'tm', 'lubridate', 
+packages = c('stringr', 'tidyr','tidyverse', 'dplyr', 'tm', 'lubridate', 
              'corporaexplorer', 'quanteda','quanteda.textstats',"igraph",
              "visNetwork", "tidygraph", "ggraph",
              "networkD3", "stm")
@@ -34,8 +41,13 @@ for (p in packages){
 }
 ```  
 
-#### Loading in data  
-1. get the list of articles in all paper sources  
+## Task 1 - characterize data sources, find primary and secondary sources
+
+**Overview:** In this task, all news articles will be loaded in and format in to a data frame. After cleaning, some features, cosine similarity is computed for each pair of articles. Only the top 0.5% pairs with highest similarity will be analyzed here. The threshold cosine similarity is 0.54. It is based on assumption that pairs of article with cosine similarity above the value possess strong similarity. Within each pair, the article published earlier is considered the primary source and the one published later is considered secondary source. This value forms a new column, **"role"**, in the data frame. Each article under the top 0.5% pairs is labeled with the article IDs that are similar to it, both published earlier and later. New column is named as, **"similar_earlier"** and **"similar_later"**. This is to enable easier visualization in the interactive corpus explorer. A interactive directed network graph is used to visualize connections between sources. After adding in new columns, corpus data frame is visualized with corpus explorer with search function. Steps and demonstration are described below.  
+
+
+### Loading in data  
+**1. Get the list of articles in all paper sources**  
 
 ```{r warning=FALSE}
 list_of_paper <- list.files(path = "MC1/News Articles", recursive = TRUE,
@@ -43,9 +55,9 @@ list_of_paper <- list.files(path = "MC1/News Articles", recursive = TRUE,
                             full.names = TRUE)
 ```    
 
-2. iteratively load in each article and save into a list of dataframes 
+**2. Load in each article in a iterative way and save them into a list of data frames** 
 
-```{r warning=FALSE, tidy=TRUE}
+```{r eval=FALSE, warning=FALSE, include=TRUE, tidy=TRUE}
 df_list <- list()
 num <- 1
 for (i in list_of_paper){
@@ -69,48 +81,55 @@ for (i in list_of_paper){
 }
 ```     
 
-3. bind all dataframes in the list  
+**3. Bind all data frames in the list** 
 
-```{r}
+```{r eval=FALSE, warning=FALSE, include=TRUE}
 df <- do.call(rbind.fill,df_list)
 ```
 
-#### Data cleaning and pre-processing  
+### Data cleaning and pre-processing  
 
-1. check data types  
+**1. check data types**  
 
-```{r echo=TRUE}
+```{r echo=TRUE, include=FALSE}
 glimpse(df)
 ```  
 
-convert "published" to datetime, it is currently a character and format all to unify the format  
++ By viewing the column "published", we can see there are 4 types of date. The data type is also not in date. The code chunk below format the dates to a consistent format and converts the data type to date. 
 
-```{r warning=FALSE}
-formats <- c("%d %B %Y","%d%B %Y","%B %d, %Y","%Y/%m%d")
+```{r eval=FALSE, warning=FALSE, include=TRUE}
+formats <- c("%d %B %Y","%d%B %Y","%B %d, %Y","%Y/%m/%d")
 df <-df %>%
   mutate(date = parse_date_time(PUBLISHED, formats))
+
+df$date <- as.Date(as.POSIXct(df$date,tz="GMT"))
 ``` 
 
-convert Doc_id to int
++ For easier ranking, convert Doc_id to int
 
-```{r}
+```{r eval=FALSE, warning=FALSE, include=TRUE}
 df$news_no <- as.integer(df$news_no)
 ```
 
-convert date to date format
+**2. change column name and adjust column order in order to load to corpus**  
 
-```{r}
-df$date <- as.Date(as.POSIXct(df$date,tz="GMT"))
-```
-
-change column name and adjust column order in order to load to corpus  
-
-```{r}
+```{r eval=FALSE, warning=FALSE, include=TRUE}
 colnames(df) <- c("Doc_id","Source","Title","Published","Location","Text","Author","Note","date")
 df_corpus <- df[,c("Doc_id","Text","Source","Title","Author","date","Location","Note")]
 ```  
 
-use quanteda to load corpus and clean the corpus by removing stopwords and punctuations. Calculate cosine similarity between each pair of document and convert to a dataframe. 
+**3. This data frame will be used as the main corpus to visualize in corpus explorer. No stopword and punctuation are removed in order to not affect reading. Save the data.**
+
+```{r eval=FALSE, warning=FALSE, include=TRUE}
+write_rds(df_corpus, "rds/original_corpus")
+```
+
+```{r eval=TRUE, warning=FALSE, include=FALSE}
+df_corpus <- read_rds("rds/original_corpus")
+```
+### Compute cosine similarity
+
+**1. Use package "quanteda" to format corpus into a dfm and clean the corpus by removing stop words and punctuation. Calculate cosine similarity between each pair of document and convert to a data frame. **
 
 ```{r warning=FALSE}
 news_corpus <- corpus(df_corpus, docid_field="Doc_id", text_field="Text")
@@ -119,21 +138,21 @@ sim <- textstat_simil(clean_corpus, margin="document", method="cosine")
 sim_df <- as.data.frame(sim)
 ```
 
-change document1 and document2 to integer
++ change type of document1 and document2 to integer
 
 ```{r}
 sim_df$document1 <- as.integer(as.character(sim_df$document1))
 sim_df$document2 <- as.integer(as.character(sim_df$document2))
 ```
 
-create a table of source for merging later
+**2. create a table of source for merging later**
 
 ```{r}
 df_source <- df_corpus %>%
   select(Doc_id,Source,date) 
 ```
 
-swap doc1 and doc2 id to make doc1 date always earlier than doc2 date. add rowid as pair_id, split to 200 bins as ranking based on cosine, highest cosine value indicates highest rank, and highest similarity
++ Swap doc1 and doc2 id to make doc1 date always earlier than doc2 date. add row id as pair_id, split to 200 bins as ranking based on cosine, highest cosine value indicates highest rank, and highest similarity. 854 pairs are filtered. 
 
 ```{r}
 sim_tmp <- sim_df %>%
@@ -150,49 +169,44 @@ sim_tmp <- sim_df %>%
             Source2=ifelse(date1<=date2, Source2, Source1))
 ```
 
-since doc 1 is published earlier than doc2, here we assume doc1 is primary news and the matching doc2 is the secondary news. Count the number of primary and secondary news in each news source and label them as primary or secondary.
++ since doc 1 is published earlier than doc2, here we assume doc1 is primary news and the matching doc2 is the secondary news. Count the number of primary and secondary news in each news source and label them as primary or secondary. Create a new column, "role", to denote the number of similar documents to the source as primary and secondary source. For example, 4_pri_1_sec means there are 4 similar articles published later than it and 1 similar article published earlier than it. 
 
 ```{r echo=TRUE}
 df_primary <- sim_tmp %>%
-  filter(rank==200) %>%
-  left_join(df_source, by=c("document1"="Doc_id"), suffix=c("1","2")) %>%
-  left_join(df_source, by=c("document2"="Doc_id"), suffix=c("1","2")) %>%
-  group_by(Source1) %>%
-  count(document1) %>%
+  group_by(document1) %>%
+  dplyr::summarise(n = n()) %>%
   mutate(role="primary") 
 
 df_secondary <- sim_tmp %>%
-  filter(rank==200) %>%
-  left_join(df_source, by=c("document1"="Doc_id"), suffix=c("1","2")) %>%
-  left_join(df_source, by=c("document2"="Doc_id"), suffix=c("1","2")) %>%
-  group_by(Source2) %>%
-  count(document2) %>%
+  group_by(document2) %>%
+  dplyr::summarise(n = n()) %>%
   mutate(role="secondary") 
 
+#join the new column to df_corpus
 df_join <- df_corpus %>%
   left_join(df_primary, by=c("Doc_id"="document1"), suffix=c("_pri","_sec")) %>%
   left_join(df_secondary, by=c("Doc_id"="document2"), suffix=c("_pri","_sec")) %>%
-  select(-Source1,-Source2) %>%
   unite("role", n_pri, role_pri, n_sec, role_sec, sep="_",na.rm=TRUE)
 
 glimpse(df_join)
 ```
 
-get all the documents that are similar, similar_later are the documents with later published date, similar_earlier are the documents with earlier published date. This information will be used to enable easy search and compare of document.
++ From sim_tmp, get all the document IDs that are similar to the source document. "similar_later" are the documents with later published date, "similar_earlier" are the documents with earlier published date. This information will be used to enable easy search and compare of document. The IDs are arranged in the descending order of similarity. For example,123_345_67 are 3 documents with 123 having the strongest similarity to the source. The column is joined back to df_join
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 pair_pri <- sim_tmp %>%
   select(cosine,pair_id,document1,document2) %>%
   group_by(document1) %>%
   arrange(document1,desc(cosine)) %>%
-  summarize(similar_later=paste(document2, collapse="_"))
+  dplyr::summarize(similar_later=paste(document2, collapse="_"))
 
 pair_sec <- sim_tmp %>%
   select(cosine,pair_id,document1,document2) %>%
   group_by(document2) %>%
   arrange(document2,desc(cosine)) %>%
-  summarize(similar_earlier=paste(document1, collapse="_"))
+  dplyr::summarize(similar_earlier=paste(document1, collapse="_"))
 
+#join the column to df_join
 df_join <- df_join %>%
   left_join(pair_pri, by=c("Doc_id"="document1")) %>%
   left_join(pair_sec, by=c("Doc_id"="document2"))
@@ -200,7 +214,9 @@ df_join <- df_join %>%
 glimpse(df_join)
 ```
 
-use corporaexplore to visualiza all primary and secondary sources.
+### Visualization and analysis  
+
+#### Corporaexplore to visualize all documents  
 
 ```{r eval=FALSE, warning=FALSE, message=FALSE, include=TRUE}
 dashboard <- prepare_data(
@@ -219,57 +235,75 @@ library(rsconnect)
 rsconnect::deployApp('/Users/xiaozhumao/XiaozhuM/DataViz_blog/_posts/2021-07-03-assignmentmc1/dashboard')
 ```
 
-click [here](https://xiaozhumao.shinyapps.io/dashboard/) to view the shiny app
+The shiny app is first deplyed to shiny.io and then embedded in the R markdown. For full view, please click [here](https://xiaozhumao.shinyapps.io/dashboard/) to view the  app in a browser.  
 
 <iframe src=" https://xiaozhumao.shinyapps.io/dashboard/"
-style="border: 1px solid black; width: 100%; height: 500px;">
-  </iframe>
+style="border: 1px solid black; width: 100%; height: 500px;"></iframe>  
   
-  Next, create nodes list and edges list for visualizing dependancies network between sources
+#### Interactive network graph  
+Next, create nodes list and edges list for visualizing dependencies network between sources. This network graph will be used together with interactive corpus explorer and interactive table to gain insights.
 
 ```{r warning=FALSE}
 sim_nodes <- df_source %>%
-  distinct(Source) %>%
+  group_by(Source) %>%
+  summarise(value=n()) %>%
   rename(label=Source) %>%
-  rowid_to_column("id")
+  rowid_to_column("id") %>%
+  mutate(title=paste("<p>",label,"<br>",value,"documents in total</p>",sep=" ")) 
+  
 
 sim_edges <- sim_tmp %>%
-  group_by(Source1, Source2) %>%
-  summarise(weight=n()) %>%
+  group_by(Source1, Source2) %>% 
+  summarise(value=n()) %>%
   left_join(sim_nodes, by=c("Source1"="label")) %>%
   rename(from=id) %>%
   left_join(sim_nodes, by=c("Source2"="label")) %>%
   rename(to=id) %>%
-  ungroup() %>%
-  select(from, to, weight)
-```
-
-visualize dependencies between sources in a network graph
-
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-sim_table <- sim_tmp %>%
-  group_by(Source1, Source2) %>%
-  summarise(similar_doc_count=n()) %>%
-  left_join(sim_nodes, by=c("Source1"="label")) %>%
-  left_join(sim_nodes, by=c("Source2"="label")) %>%
-  select(Source1, Source2, similar_doc_count) %>%
-  filter(similar_doc_count>=10) %>%
-  arrange(desc(similar_doc_count))
-
-view(sim_table)
-
+  select(from, to, value.x,Source1, Source2) %>%
+  rename(value=value.x) %>%
+  mutate(title=paste("<p>Similar Articles<br>primary:",Source1, "</br>",
+                     "<br>secondary:",Source2,"</br>",
+                     value,"similar documents</p>", sep=" ")) %>%
+  select(Source1, Source2, from, to, value, title)
+  
 ```
 
 ```{r echo=TRUE, warning=FALSE}
 visNetwork(sim_nodes, sim_edges) %>%
-  visEdges(arrows = 'middle') %>%
+  visEdges(arrows = 'middle', ) %>%
   visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
   visIgraphLayout(layout="layout_in_circle")
 
 ```
 
+#### Use interactive table   
+The table shows the number of articles similar  
 
-#### stopped here
+```{r echo=TRUE, message=FALSE, warning=FALSE, size="tiny"}
+DT::datatable(sim_edges %>% select(Source1, Source2, value), 
+              colnames=c("Primary", "Secondary","Similar_doc_count"),
+              caption= htmltools::tags$caption(
+                style = 'caption-side: top; text-align: left;', 
+                htmltools::em("Interactive table for aggregated view of sources 
+                              and similar documents")),
+              filter="top",
+              rownames=FALSE,
+              options = list(pageLength = 7, autoWidth = FALSE))
+
+```
+
+
+
+
+
+## Task 2 - Characterize news sources to find any bias
+
+
+
+
+## Task 3 - Find relationship between personal and organizations
+
+### Loading in package and data  
 install chorddiag and load library
 
 ```{r}
@@ -277,23 +311,53 @@ devtools::install_github("mattflor/chorddiag")
 library(chorddiag)
 ```
 
-read in email headers node and edge
+read in employee records to form nodes
 
 ```{r message=FALSE}
-GAStech_nodes <- read_csv("MC1/data/GAStech_email_node.csv")
-GAStech_edges <- read_csv("MC1/data/GAStech_email_edge.csv")
+employee_records <- read_csv("MC1/EmployeeRecords.csv")
+employee_records <- employee_records %>%
+  mutate(Name=paste(FirstName, LastName, sep=".")) %>%
+  transform(BirthDate=parse_date_time(BirthDate,"%d/%m/%y"),
+            CitizenshipStartDate=parse_date_time(CitizenshipStartDate, "%d/%m/%y"),
+            PassportIssueDate=parse_date_time(PassportIssueDate, "%d/%m/%y"),
+            PassportExpirationDate=parse_date_time(PassportExpirationDate,
+                                                   "%d/%m/%y"),
+            CurrentEmploymentStartDate=parse_date_time(CurrentEmploymentStartDate,
+                                                       "%d/%m/%y"),
+            MilitaryDischargeDate=year(parse_date_time(MilitaryDischargeDate,
+                                                  "%d/%m/%y"))) %>%
+  mutate(Age=ifelse(year(BirthDate)>2014, 
+                             2014-year(BirthDate)+100, 2014-year(BirthDate))) %>%
+  select(Name, Age,everything(), -FirstName, -LastName,-BirthDate)
 ```
+
+```{r}
+employee_nodes <- employee_records %>%
+  select(Name,Gender,Age,CurrentEmploymentType,CurrentEmploymentTitle,
+         CitizenshipCountry) %>%
+  rename(label=Name, Department=CurrentEmploymentType,
+         Title=CurrentEmploymentTitle, Country=CitizenshipCountry) %>%
+  rowid_to_column("id")
+```
+
 
 because all emails were sent in 2014 Jan, additional column is created for day of month. This will be used to visualize the number of emails in each day by each sender, considering a email will be sent to multiple receiver.
 
 ```{r}
-GAStech_edges_aggregated <- GAStech_edges %>%
-  filter(source!=target) %>%
-  transform(SentDate=dmy(SentDate)) %>%
-  mutate(day=day(SentDate)) %>%
-  separate(Subject, c("type","Subject"), ":") %>%
-  transform(Subject=ifelse(type=="RE", Subject, type),
-            type=ifelse(type=="RE", "reply", "direct"))
+employee_email <- read_csv("MC1/email headers.csv")
+employee_email_agg <- employee_email %>%
+  separate_rows(To, sep=",") %>%
+  separate(From, c("From","FromEmail"), sep="@") %>%
+  separate(To, c("To","ToEmail"),sep="@") %>%
+  mutate(To=str_trim(To)) %>%
+  transform(Date=parse_date_time(Date, "mdy_hm")) %>%
+  transform(Day=day(Date),
+            SentTime=format(Date, format="%H:%M")) %>%
+  separate(Subject, c("Type","Subject"), ":") %>%
+  transform(Subject=ifelse(Type=="RE", Subject, Type),
+            Type=ifelse(Type=="RE", "reply", "direct")) %>%
+  select(From, To, Day, SentTime, Type, Subject) %>%
+  rename(Source=From, Target=To) 
 ```
 
 Manipulate table to detect any employee who sends email to all employees, i.e. send to 54 recipients. Group the records by source, day, type, subject and main subject. The table below indicates that only 2 people who send to the whole company, Mat Bramar and Ruscella Mies Haber. They both work in administration department. Mat is assistant to CEO. From the subjects, we can conlude that he regularly sends announcement, reminders, and matters that relate to the whole company, such as "All staff announcement" and "Changes to travel policy".
@@ -301,35 +365,20 @@ Manipulate table to detect any employee who sends email to all employees, i.e. s
 Ruscella is assistant to engineering group manager. She sends only 2 types of emails to the whole company, "Daily morning announcements" and "Good morning, GasTech!" Both are daily news updates for the whole company to read. 
 
 ```{r message=FALSE}
-email_eachday <- GAStech_edges_aggregated %>%
-  group_by(source, day, type, Subject, MainSubject) %>%
+email_eachday <- employee_email_agg %>%
+  filter(Source!=Target) %>%
+  group_by(Source, Day, Type, Subject) %>%
   summarise(n=n()) %>%
   filter(n==53) %>%
-  select(source, day, Subject) %>%
-  arrange(source,Subject)
+  select(Source, Day, Subject) %>%
+  arrange(Source,Subject)
 ```
 
-preparation for constructing graph. 2 chunks below are not used now. 
-
-```{r}
-GAStech_edges_1 <- GAStech_edges_aggregated %>%
-  group_by(source, target, day) %>%
-  summarise(weight=n()) %>%
-  left_join(GAStech_nodes, by=c("source"="label"), suffix=c(".from", ".to")) %>%
-  left_join(GAStech_nodes, by=c("target"="label"),suffix=c(".from", ".to")) %>%
-  rename(from=id.from, to=id.to) %>%
-  ungroup() %>%
-  select(from, to, day,weight) 
-```
-
-```{r}
-GAStech_graph <- tbl_graph(nodes=GAStech_nodes, edges=GAStech_edges_1)
-```
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
-email_matrix <- GAStech_edges_aggregated %>%
-  select(source, target) %>%
-  group_by(source, target) %>%
+email_matrix <- employee_email_agg %>%
+  select(Source, Target) %>%
+  group_by(Source, Target) %>%
   summarise(n=n()) 
 
 email_matrix <- graph.data.frame(email_matrix, directed=TRUE)
@@ -347,19 +396,19 @@ There is a large number of emails sent from and received by Mat Bramar and Rusce
 Next, we will remove the reminder and announcement emails that were sent to all employees for better interpretation of the emails.This includes both directed email and reply emails to all. 
 
 ```{r}
-GAStech_edges2 <- email_eachday %>%
+employee_edges_2 <- email_eachday %>%
   mutate(delete="yes") %>%
-  right_join(GAStech_edges_aggregated, by=c("source"="source",
-                                            "Subject"="Subject",
-                                            "type"="type",
-                                            "day"="day")) %>%
+  right_join(employee_email_agg, by=c("Source"="Source",
+                                      "Subject"="Subject",
+                                      "Type"="Type",
+                                      "Day"="Day")) %>%
   filter(is.na(delete)) 
 ```
 ```{r}
-email_matrix2 <- GAStech_edges2 %>%
-  filter(type=="direct") %>%
-  select(source, target) %>%
-  group_by(source, target) %>%
+email_matrix2 <- employee_edges_2 %>%
+  filter(Type=="direct") %>%
+  select(Source, Target) %>%
+  group_by(Source, Target) %>%
   summarise(n=n()) 
 
 email_matrix2 <- as.matrix(get.adjacency(graph.data.frame(
