@@ -22,12 +22,9 @@ sim_tmp <- sim_df %>%
             Source2=ifelse(date1<=date2, Source2, Source1))
 
 #get the documents with highest similarity and earlier date
-df_primary <- sim_tmp %>%
-  filter(rank==200) %>%
-  left_join(df_source, by=c("document1"="Doc_id"), suffix=c("1","2")) %>%
-  left_join(df_source, by=c("document2"="Doc_id"), suffix=c("1","2")) %>%
-  group_by(Source1) %>%
-  count(document1) %>%
+sim_tmp %>%
+  group_by(Source1, document1) %>%
+  dplyr::summarise(n = n()) %>%
   mutate(role="primary") 
 
 #get the later
@@ -44,6 +41,14 @@ df_join <- df_corpus %>%
   left_join(df_secondary, by=c("Doc_id"="document2"), suffix=c("_pri","_sec")) %>%
   select(-Source1,-Source2) %>%
   unite("role", n_pri, role_pri, n_sec, role_sec, sep="_",na.rm=TRUE)
+
+sim_tmp %>%
+  select(cosine,document1,document2) %>%
+  group_by(document1) %>%
+  arrange(document1,desc(cosine)) %>%
+  dplyr::summarise(similar_later=paste(document2, collapse="_"))
+
+
 
 #dependancies between sources
 sim_nodes <- df_source %>%
@@ -578,4 +583,53 @@ rsconnect::deployApp('/Users/xiaozhumao/XiaozhuM/DataViz_blog/_posts/2021-07-03-
 style="border: 1px solid black; width: 100%; height: 500px;">
   </iframe>
 
+  
+nb <- 10
+nodes <- data.frame(id = 1:nb, label = paste("Label", 1:nb),
+                    group = sample(LETTERS[1:3], nb, replace = TRUE), value = 1:nb,
+                    title = paste0("<p>", 1:nb,"<br>Tooltip !</p>"), stringsAsFactors = FALSE)
 
+edges <- data.frame(from = c(8,2,7,6,1,8,9,4,6,2),
+                    to = c(3,7,2,7,9,1,5,3,2,9),
+                    value = rnorm(nb, 10), label = paste("Edge", 1:nb),
+                    title = paste0("<p>", 1:nb,"<br>Edge Tooltip !</p>"))
+visNetwork(nodes, edges, height = "500px", width = "100%") %>% 
+  visOptions(highlightNearest = TRUE) %>%
+  visLayout(randomSeed = 123)
+
+
+sim_table <- sim_tmp %>%
+  group_by(Source1, Source2) %>%
+  summarise(n=n()) %>%
+  left_join(sim_nodes, by=c("Source1"="label")) %>%
+  left_join(sim_nodes, by=c("Source2"="label")) %>%
+  select(Source1, Source2, n) %>%
+  arrange(desc(n))
+
+```{r}
+GAStech_edges_aggregated <- GAStech_edges %>%
+  filter(source!=target) %>%
+  transform(SentDate=dmy(SentDate)) %>%
+  mutate(day=day(SentDate)) %>%
+  separate(Subject, c("type","Subject"), ":") %>%
+  transform(Subject=ifelse(type=="RE", Subject, type),
+            type=ifelse(type=="RE", "reply", "direct"))
+```
+
+##-------not in use now
+
+```{r}
+employee_edges <- employee_email_agg %>%
+  group_by(Source, Target, Day) %>%
+  summarise(weight=n()) %>%
+  left_join(employee_nodes, by=c("Source"="label"), suffix=c(".from", ".to")) %>%
+  left_join(employee_nodes, by=c("Target"="label"),suffix=c(".from", ".to")) %>%
+  rename(from=id.from, to=id.to) %>%
+  ungroup() %>%
+  select(from, to, weight, Day) 
+```
+
+```{r}
+email_graph <- tbl_graph(nodes=employee_nodes, node_key="id",edges=employee_edges)
+```
+##---------

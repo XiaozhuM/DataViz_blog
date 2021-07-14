@@ -9,11 +9,12 @@ date: 07-03-2021
 output:
   distill::distill_article:
   self_contained: false
-toc: true
-toc_float: true
+  toc: true
+  toc_float: true
+  toc_depth: 4
 draft: FALSE
 ---
-```{r}
+```{r include=FALSE}
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
@@ -29,10 +30,11 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE)
 The packages will be used in the assignment. 
 
 ```{r tidy=TRUE}
-packages = c('stringr', 'tidyr','tidyverse', 'dplyr', 'tm', 'lubridate', 
+packages = c('stringr', 'stringi','tidyr','tidyverse', 'dplyr', 'tm', 'lubridate', 
              'corporaexplorer', 'quanteda','quanteda.textstats',"igraph",
-             "visNetwork", "tidygraph", "ggraph",
-             "networkD3", "stm")
+             "visNetwork", "tidygraph", "ggraph","networkD3", "stm", 
+             "tidytext", "widyr", "wordcloud", 
+             "ggwordcloud", "textplot")
 for (p in packages){
   if(!require(p, character.only = T)){
     install.packages(p)
@@ -276,7 +278,7 @@ visNetwork(sim_nodes, sim_edges) %>%
 
 ```
 
-#### Use interactive table   
+#### Interactive table   
 The table shows the number of articles similar  
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, size="tiny"}
@@ -293,30 +295,205 @@ DT::datatable(sim_edges %>% select(Source1, Source2, value),
 ```
 
 
-
-
-
 ## Task 2 - Characterize news sources to find any bias
 
+**Overview**: Corpus explorer from Task 1 will be used again to view each text. By searching for key terms, "POK", "APA", "government", and "GASTech", we aim to find out if there is any bias held against these terms in each day source. Additionally, word cloud is plotted for each source to find frequently appeared words. 
 
+From the background information, we understand that **POK(protectors of kronos)** was established to advocate environmental protection in Kronos. A key incident in the growth of POK was death of Juliana Vann, a 10-year-old girl who died from leukemia, directly or indirectly resulted from water pollution. Water pollution was contributed mostly by **GASTech** factory in Kronos. 
+
+In general, POK is against GASTech and Kronos government did little to help with the water pollution. Because POK is clearly on the opposite side of government and GASTech, in exploring the corpus, we filter out 2 kinds of news:  
++ those mention both POK and government  
++ those mention both POK and GASTech  
+By analysing these texts, we aim to find opinions held by news sources.
+
+### Corpus Explorer
+
+The shiny app is from previous section.  Search for POK, government and gastech to highlight in corpus.
+
+![alt text](image/4.png)
+
+![alt text](image/1.png)  
+Red indicates POK, blue indicates government and green indicates gastech. Each bar plots the frequency of word occurence in the source.   
+
+#### Group 1: **Disinterest in POK**
+
+From the plot, clearly there is barely no mentioning of POK in _Centrum Sentinel, Modern Rubicon, Tethys News, The General Post, The light of Truth, The Tulip, The World, and Who What News._ These sources tend to report more on GASTech with some news on government.   
+
+From corpus explorer, we can understand that _Centrum Sentinel, Modern Rubicon, Tethys News_ report update on the kidnap incident with timestamp. They only focus on reporting the incident.  
+
+![alt text](image/2.png)  
+Referring to the picture below, each source has 0 or no mentioning of POK. The background information has revealed that government was planning on tax relief for gas and oil to encourage companies such as GASTech. Since we assume government and gastech are on the opposite side of POK, these sources can be categorised as neutral-favors gastech/government. 
+
+![alt text](image/3.png)
+
+
+#### Group 2: **Passion in GASTech** 
+
+In most of the sources, GASTech is the most reported topic. This is especially so in _Homeland Illumination, Kronos Star, News Online Today, The Abila Post._ As Group 1 contains many sources who reports mainly on Gastech and the government, group 2 excludes those in group even though there were originally some overlaps. This group reports all parties but with a focus on gastech. They are in general more neutral than group 1. 
+
+To understand if there was any bias in reporting, additional search fields are set: **rally** and **protest**. Only corpus containing "rally" is shown.
+
+![alt text](image/5.png)
+The above mentioned 4 sources are all among the list. Even though GASTech was mentioned a lot in this category, the news never fails to discuss about key incidents about POK. 
+
+Especially Homeland Illumination which uses long articles to discuss about POK. The data table below enables searching for specific sentence containing the keywords. 
+
+```{r}
+df_sentence <- df_join %>%
+  separate_rows(Text, sep="[.]") %>%
+  select(Source, Text) %>%
+  mutate(Text=str_trim(Text))
+```
+
+```{r}
+DT::datatable(df_sentence, filter="top",
+              rownames=FALSE,
+              options = list(pageLength = 3, autoWidth = FALSE))
+```
+
+The breakdown sentences shows that Homeland Illumination is in a supportive role of POK. Some sentences such as, "Elian Karel, age 28, died Friday while unlawfully incarcerated at the Abila City Prison" in one of the articles showed sympathy for the POK leader's death in prison. 
+
+While the rest of the sources in this group do not have comments in the reports. 
+
+Homeland Illumination - In favor of POK
+Kronos Star, News Online Today, The Abila Post - Neutral
+
+
+#### Group 3: **All rounder** 
+
+Some sources have roughly equal coverage in three categories. These sources include _All News Today, Athena Speaks, Central bulletin, Daily Peagasus, Everyday News, International Times, News Deck, The Continent, The Explainer, The Orb, The Wrap, World of Journal._  
+
+#### Group 4: **Voice of POK** 
+
+These sources report more on POK as compared to the coverage of government and GASTech. Such sources are _International News, The guide, The Truth, Worldwise._   
+
+### Wordcloud
+
+Word cloud graphs are plotted according the previous grouped categories. 
+
+**Disinterest in POK**
+
++ Define stopwords to be removed from wordcloud
+
+```{r}
+stop <- c(stop_words$word,"kronos", "elodis")
+```
+
++ Compute the occurrence frequency of each word in each news source. 
+
+```{r}
+word_freq <- df_join %>%
+  select(Source, Text) %>%
+  unnest_tokens(Word, Text) %>%
+  filter(str_detect(Word, "[a-z']$"),
+         !Word %in% stop) %>%
+  count(Source, Word, sort=TRUE) %>%
+  ungroup()
+```
+
++ Plot wordcloud 
+
+```{r}
+set.seed(2021)
+
+par(mar=rep(0,4), #remove remove margin
+    mfrow=c(2,3)) # for 1 row, 2 cols
+
+word_freq %>% 
+  filter(Source == "The General Post") %>% 
+  with(wordcloud(Word, n, min.freq = 2, 
+                 min_font_size=1, max_font_size=6,
+                 max.words=100, random.order=FALSE, scale=c(2,0.3), rot.per=0.35, 
+                 colors=brewer.pal(8, "Dark2")))
+word_freq %>% 
+  filter(Source == "The Light of Truth") %>% 
+  with(wordcloud(Word, n, min.freq = 2, 
+                 min_font_size=1, max_font_size=6,
+                 max.words=100, random.order=FALSE, scale=c(2,0.3), rot.per=0.35, 
+                 colors=brewer.pal(8, "Dark2")))
+word_freq %>% 
+  filter(Source == "The Tulip") %>% 
+  with(wordcloud(Word, n, min.freq = 2, 
+                 min_font_size=1, max_font_size=6,
+                 max.words=100, random.order=FALSE, scale=c(2,0.3), rot.per=0.35, 
+                 colors=brewer.pal(8, "Dark2")))
+word_freq %>% 
+  filter(Source == "The World") %>% 
+  with(wordcloud(Word, n, min.freq = 2, 
+                 min_font_size=1, max_font_size=6,
+                 max.words=100, random.order=FALSE, scale=c(2,0.3), rot.per=0.35, 
+                 colors=brewer.pal(8, "Dark2")))
+word_freq %>% 
+  filter(Source == "Who What News") %>% 
+  with(wordcloud(Word, n, min.freq = 2, 
+                 min_font_size=1, max_font_size=6,
+                 max.words=100, random.order=FALSE, scale=c(2,0.3), rot.per=0.35, 
+                 colors=brewer.pal(8, "Dark2")))
+```
+It is clear that these 5 sources: _The General Post, The light of Truth, The Tulip, The World, and Who What News_ reports mostly on gastech and Sten Sanjorge who is the CEO of GASTech.
+
+
+**Passion in GASTech**
+
+```{r}
+set.seed(2021)
+
+par(mar=rep(0,4), #remove remove margin
+    mfrow=c(2,2)) # for 1 row, 2 cols
+
+stop2 <- c("gastech","government") #define additional word to be removed
+
+word_freq %>% 
+  filter(Source == "Homeland Illumination",
+         !Word %in% stop2) %>% 
+  with(wordcloud(Word, n, min.freq = 2, 
+                 min_font_size=1, max_font_size=6,
+                 max.words=100, random.order=FALSE, scale=c(2,0.3), rot.per=0.35, 
+                 colors=brewer.pal(8, "Dark2")))
+
+word_freq %>% 
+  filter(Source == "Kronos Star",
+         !Word %in% stop2) %>% 
+  with(wordcloud(Word, n, min.freq = 2, 
+                 min_font_size=1, max_font_size=6,
+                 max.words=100, random.order=FALSE, scale=c(2,0.3), rot.per=0.35, 
+                 colors=brewer.pal(8, "Dark2")))
+word_freq %>% 
+  filter(Source == "News Online Today",
+         !Word %in% stop2) %>% 
+  with(wordcloud(Word, n, min.freq = 2, 
+                 min_font_size=1, max_font_size=6,
+                 max.words=100, random.order=FALSE, scale=c(2,0.3), rot.per=0.35, 
+                 colors=brewer.pal(8, "Dark2")))
+word_freq %>% 
+  filter(Source == "The Abila Post",
+         !Word %in% stop2) %>% 
+  with(wordcloud(Word, n, min.freq = 2, 
+                 min_font_size=1, max_font_size=6,
+                 max.words=100, random.order=FALSE, scale=c(2,0.3), rot.per=0.35, 
+                 colors=brewer.pal(8, "Dark2")))
+```
+There are a lot of mentioning of POK leader, Elian Karel, in these sources. In addition, contamination, water, health, drug, protectors are frequently mentioned in these sources. These usually appear in the slogans in POK rally and protests. 
 
 
 ## Task 3 - Find relationship between personal and organizations
 
 ### Loading in package and data  
-install chorddiag and load library
+
+install chorddiag and load library. Chord diagram will be used to analyze email conversation between employees.
 
 ```{r}
 devtools::install_github("mattflor/chorddiag")
 library(chorddiag)
 ```
 
-read in employee records to form nodes
+Read in employee records to form nodes. Format the columns of dates to date format. A new column "Name" is created to replace FirstName and LastName. Column "Age" is created from BirthDate. Age is calculated until 2014 when the kidnap incident happened. 
 
 ```{r message=FALSE}
 employee_records <- read_csv("MC1/EmployeeRecords.csv")
 employee_records <- employee_records %>%
   mutate(Name=paste(FirstName, LastName, sep=".")) %>%
+  transform(Name=sub(" ", ".", Name)) %>%
   transform(BirthDate=parse_date_time(BirthDate,"%d/%m/%y"),
             CitizenshipStartDate=parse_date_time(CitizenshipStartDate, "%d/%m/%y"),
             PassportIssueDate=parse_date_time(PassportIssueDate, "%d/%m/%y"),
@@ -328,8 +505,10 @@ employee_records <- employee_records %>%
                                                   "%d/%m/%y"))) %>%
   mutate(Age=ifelse(year(BirthDate)>2014, 
                              2014-year(BirthDate)+100, 2014-year(BirthDate))) %>%
-  select(Name, Age,everything(), -FirstName, -LastName,-BirthDate)
+  select(Name, Age,everything(), -FirstName, -LastName, -BirthDate)
 ```
+
+Make row id a new column "id" as the node id. Name is the node label. Rename some columns for easier understanding.
 
 ```{r}
 employee_nodes <- employee_records %>%
@@ -337,43 +516,58 @@ employee_nodes <- employee_records %>%
          CitizenshipCountry) %>%
   rename(label=Name, Department=CurrentEmploymentType,
          Title=CurrentEmploymentTitle, Country=CitizenshipCountry) %>%
+  arrange(label) %>%
   rowid_to_column("id")
 ```
 
-
-because all emails were sent in 2014 Jan, additional column is created for day of month. This will be used to visualize the number of emails in each day by each sender, considering a email will be sent to multiple receiver.
+Load in edges list from email headers. Separate SentDate and SentTime. Because all emails were sent in 2014 Jan, additional column is created for day of month. This will be used to visualize the number of emails in each day by each sender, considering a email will be sent to multiple receiver. Another column, "Role", is created to indicate if the email is a direct email or reply to other emails.
 
 ```{r}
-employee_email <- read_csv("MC1/email headers.csv")
+employee_email <- read.csv("MC1/email headers.csv", encoding="UTF-8")
 employee_email_agg <- employee_email %>%
+  transform(Subject=stringi::stri_enc_toascii(Subject)) %>%
   separate_rows(To, sep=",") %>%
   separate(From, c("From","FromEmail"), sep="@") %>%
-  separate(To, c("To","ToEmail"),sep="@") %>%
+  separate(To, c("To","ToEmail"), sep="@") %>%
   mutate(To=str_trim(To)) %>%
-  transform(Date=parse_date_time(Date, "mdy_hm")) %>%
-  transform(Day=day(Date),
+  transform(Date=parse_date_time(Date, c("mdy_hm","mdy"))) %>%
+  transform(SentDate=date(Date),
             SentTime=format(Date, format="%H:%M")) %>%
-  separate(Subject, c("Type","Subject"), ":") %>%
-  transform(Subject=ifelse(Type=="RE", Subject, Type),
-            Type=ifelse(Type=="RE", "reply", "direct")) %>%
-  select(From, To, Day, SentTime, Type, Subject) %>%
-  rename(Source=From, Target=To) 
+  mutate(Type=ifelse(str_detect(Subject, "RE:")==TRUE, "reply","direct")) %>%
+  select(From, To, SentDate, SentTime, Type, Subject) %>%
+  rename(Source=From, Target=To) %>%
+  transform(Source=sub(" ", ".", Source),
+            Target=sub(" ", ".", Target))
 ```
 
-Manipulate table to detect any employee who sends email to all employees, i.e. send to 54 recipients. Group the records by source, day, type, subject and main subject. The table below indicates that only 2 people who send to the whole company, Mat Bramar and Ruscella Mies Haber. They both work in administration department. Mat is assistant to CEO. From the subjects, we can conlude that he regularly sends announcement, reminders, and matters that relate to the whole company, such as "All staff announcement" and "Changes to travel policy".
+### Visualization and analysis  
+
+#### Interactive tabel - Manipulate table to find insights
+
+Manipulate table to detect any employee who sends email to all employees, i.e. send to 53 recipients excluding himself or herself. Group the records by source, day, type, subject. The table below indicates that only 2 people who send to the whole company, Mat Bramar and Ruscella Mies Haber. They both work in administration department. Mat is assistant to CEO. From the subjects, we can conlude that he regularly sends announcement, reminders, and matters that relate to the whole company, such as "All staff announcement" and "Changes to travel policy".
 
 Ruscella is assistant to engineering group manager. She sends only 2 types of emails to the whole company, "Daily morning announcements" and "Good morning, GasTech!" Both are daily news updates for the whole company to read. 
 
 ```{r message=FALSE}
 email_eachday <- employee_email_agg %>%
   filter(Source!=Target) %>%
-  group_by(Source, Day, Type, Subject) %>%
+  group_by(Source, SentDate, Type, Subject) %>%
   summarise(n=n()) %>%
   filter(n==53) %>%
-  select(Source, Day, Subject) %>%
+  select(Source, SentDate, Subject) %>%
   arrange(Source,Subject)
+
+DT::datatable(email_eachday, filter="top",
+              caption= htmltools::tags$caption(
+                style = 'caption-side: top; text-align: left;', 
+                htmltools::em("Employee who sent emails to the whole company")),
+              rownames=FALSE,
+              options = list(pageLength = 7, autoWidth = FALSE))
 ```
 
+#### Chord diagram to see all email exchanges
+
+The interactive diagram below shows the exchange of email from all employees.  
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
 email_matrix <- employee_email_agg %>%
@@ -391,22 +585,24 @@ chorddiag(as.matrix(email_matrix),
 
 ```
 
-There is a large number of emails sent from and received by Mat Bramar and Ruscella Mie Haber. This is because they are responsible for administrative task, such as sending announcements and reminder. 
+There is a large number of emails sent from and received by Mat Bramar and Ruscella Mie Haber. This is because they are responsible for administrative task, such as sending announcements and reminder. From previous interactive table, we have seen that they send many administrative emails to the whole compnay.
 
-Next, we will remove the reminder and announcement emails that were sent to all employees for better interpretation of the emails.This includes both directed email and reply emails to all. 
+Next, we will remove such exchanges that were sent to all employees for better interpretation of the emails. This includes both directed email and reply emails to all. 
 
 ```{r}
-employee_edges_2 <- email_eachday %>%
-  mutate(delete="yes") %>%
+employee_email_agg2 <- email_eachday %>%
+  mutate(delete="yes") %>% #mark all emails in email_eachday as "yes" in delete
   right_join(employee_email_agg, by=c("Source"="Source",
                                       "Subject"="Subject",
                                       "Type"="Type",
-                                      "Day"="Day")) %>%
-  filter(is.na(delete)) 
+                                      "SentDate"="SentDate")) %>%
+  filter(is.na(delete)) %>% #only keep those without a lable in delete
+  filter(Source!=Target) %>%
+  select(Source, Target, SentDate, SentTime, Subject, Type)
 ```
+
 ```{r}
-email_matrix2 <- employee_edges_2 %>%
-  filter(Type=="direct") %>%
+email_matrix2 <- employee_email_agg2 %>%
   select(Source, Target) %>%
   group_by(Source, Target) %>%
   summarise(n=n()) 
@@ -421,3 +617,55 @@ chorddiag(email_matrix2,
           showTicks=FALSE)
 ```
 
+#### Interactive network 
+
+Prepare nodes and edges table for visNetwork. 
+
+```{r}
+employee_nodes <- employee_nodes %>%
+  #add tooltip column
+  mutate(title=paste("<p>",label,Gender,Age,"</br>",
+                     "<br>",Department, Title,"</br></p>",sep=" ")) %>%
+  rename(group=Department)
+```
+
+```{r}
+employee_edges <- employee_email_agg2 %>%
+  left_join(employee_nodes%>%select(id,label),
+            by=c("Source"="label"), suffix=c(".Source", ".Target")) %>%
+  left_join(employee_nodes%>%select(id,label),
+            by=c("Target"="label"), suffix=c(".Source", ".Target")) %>%
+  rename(from=id.Source, to=id.Target) %>%
+  group_by(from, to, Source, Target, Type) %>%
+  summarise(Sum=n()) %>%
+  ungroup() %>%
+  group_by(from, to, Source, Target) %>%
+  mutate(value=sum(Sum)) %>%
+  mutate(Tooltip=paste(Sum, Type)) %>%
+  select(-Sum, -Type) %>%
+  mutate(Tooltip=paste(Tooltip, collapse=", ")) %>%
+  mutate(title=paste("<p>from",Source,"to",Target, "</br>",
+                     Tooltip, "</br>")) %>%
+  ungroup() %>%
+  distinct(from, to, value, title)
+```  
+
+```{r}
+visNetwork(employee_nodes, employee_edges) %>%
+  visEdges(arrows = 'to', ) %>%
+  visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
+  visLegend() %>%
+  visIgraphLayout(layout="layout_with_fr")
+
+```
+
+Visualize together with interactive table of all emails.
+
+```{r}
+DT::datatable(employee_email_agg2, filter="top",
+              caption= htmltools::tags$caption(
+                style = 'caption-side: top; text-align: left;', 
+                htmltools::em("Email exchanges that are not to everyone")),
+              rownames=FALSE,
+              options = list(pageLength = 7, autoWidth = FALSE))
+```
