@@ -384,7 +384,7 @@ df_join %>%
               options = list(pageLength = 5, autoWidth = FALSE))
 ```
 
-![alt text](image/theworld.png)  
+![alt text](image/theworld.png){width=60%}  
 As the other 5 sources have a centroid, "The World", a wordcloud is plot to visualize topics involved in the texts.
 
 ```{r warning=FALSE, include=FALSE}
@@ -691,6 +691,8 @@ From the background information, we know that the founding leaders of POK are He
 
 There are 7 employees with the same last name of middle name as the POK leaders. 5 of them are in securities and 1 of them is the truck driver. The combination enables them to conveniently bring in suspected people or bring out people sneakily.   
 
+Below network graph shows email converstation initiated by these members.
+
 ```{r}
 name <- "Bodrogi|Karel|Osvaldo|Marek|Vann|Jakab|Stefano|Mies|Cato|Katell"
 
@@ -728,7 +730,40 @@ visNetwork(employee_nodes, employee_edges_suspect) %>%
 
 ```
 
-+ They have emails sent to people outside of the department, especially Isia Vann, who has the exact same name as POK leader sent an email to CEO, named as "File attachment" on 17th Jan. There is no other email communication between them. Considering Henk Mies is a truck driver, there is unlikely that he has any crossover in work with the CEO.
+The network graph below shows the email conversation to these group of people. 
+
+```{r echo=FALSE}
+employee_edges_suspect2 <- employee_email_agg2 %>%
+  left_join(employee_nodes%>%select(id,label),
+            by=c("Source"="label"), suffix=c(".Source", ".Target")) %>%
+  right_join(employee_nodes_suspect%>%select(id,label),
+            by=c("Target"="label"), suffix=c(".Source", ".Target")) %>%
+  rename(from=id.Source, to=id.Target) %>%
+  group_by(from, to, Source, Target, Type) %>%
+  summarise(Sum=n()) %>%
+  ungroup() %>%
+  group_by(from, to, Source, Target) %>%
+  mutate(value=sum(Sum)) %>%
+  mutate(Tooltip=paste(Sum, Type)) %>%
+  select(-Sum, -Type) %>%
+  mutate(Tooltip=paste(Tooltip, collapse=", ")) %>%
+  mutate(title=paste("<p>from",Source,"to",Target, "</br>",
+                     Tooltip, "</br>")) %>%
+  ungroup() %>%
+  distinct(from, to, value, title)
+```  
+
+```{r echo=FALSE}
+visNetwork(employee_nodes, employee_edges_suspect2) %>%
+  visEdges(arrows = 'to', ) %>%
+  visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
+  visLegend() %>%
+  visIgraphLayout(layout="layout_nicely")
+
+```
+
+
++ They have emails sent to people outside of the department, especially Henk Mies, sent an email to CEO, named as "File attachment" on 17th Jan. There is no other email communication between them. Considering Henk Mies is a truck driver, there is unlikely that he has any crossover in work with the CEO.
 
 ```{r echo=FALSE}
 employee_email_agg2 %>%
@@ -742,6 +777,8 @@ employee_email_agg2 %>%
 ```
 
 + Ruscella Mies Haber has sent emails to Minke Mies who is outside of the department about "FW: ARISE - Inspiration for Defenders of Kronos". The title contains defenders of kronos, which is similar to Protectors of Kronos. Checking the people involved in the email, surprisingly most of them, Ruscella Mies Haber, Loreto Bodrogi, Isia Vann, Hennie Osvaldo, Minke Mies are having the same sir names as the POK leaders. There is potentially a small POK branch in GASTech. Rachel Pantanal and Inga Ferro, though not directly related to the POK leadrs, potentially are in the group too. Especially considering that Rachel Pantanal was the one initiating the email. 
+
++ "Arise" in the email title, is also a magazine that APA sought to build brand through. There might be a link between the email and the Arise magazine. _"In recent years the APA has sought to build their brand through websites and the publication of a professional, high-quality magazine called "Arise"."_ (from International Times)
 
 ```{r echo=FALSE}
 employee_email_agg2 %>%
@@ -766,5 +803,28 @@ employee_email_agg2 %>%
               options = list(pageLength = 5, autoWidth = FALSE))
 ```
 
-+ Vincent Kapelou is the nephew of Kronos President. _"ABILA, Kronos - letters claimed to be from guards of Kronos (POK) were received by Vincent Kapelou, minister of health and nephew of President Kapelou. "_
++ Isia Vann, who has the exact same name as POK leader was in ArmedForcesOfKronos and was discharged in 2007. His resume has stated he was in army from 2005 to 2007. Despite having the same name as POK leader, he was not questioned by the police after the incident. Instead, Edvard Vann was in investigation with the police for 6 hours. _"Edvard Vann, a GAStech - Kronos security guard who was interrogated and released after 6 hours"_ (from The Abila Post) 
+
+This can be explained by either 1) He was kidnapped during the incident 2) He was in great disguise and the Police was not aware that he was GASTech employee.
+
+7 other people are identified as potential acquaintance of Isia Vann, by filtering out their military discharge year from 2005 to 2009 assuming their military service time is 2 years. However, there is no evidence of email exchange between Isia Vann and these people. Among these people, the most potential person is Albina Hafon who was in army from 2006 to 2007 with 1 year overlap with Isia Vann. He attended ABila Community college from 2004 to 2006 which also overlaps with Isia Vann who was in the same college from 2003 to 2005.
+
+![alt text](image/9.png)
+```{r echo=FALSE}
+employee_records %>%
+  filter(MilitaryServiceBranch=="ArmedForcesOfKronos",
+         MilitaryDischargeDate >= 2005 & MilitaryDischargeDate <= 2009) %>%
+  select(Name, Age, Gender, MilitaryDischargeDate) %>%
+  arrange(MilitaryDischargeDate) %>%
+  DT::datatable(filter="top", caption= htmltools::tags$caption(
+                style = 'caption-side: top; text-align: left;', 
+                htmltools::em("People who might have been in the army with Isia Vann")),
+              rownames=FALSE,
+              options = list(pageLength = 5, autoWidth = FALSE))
+```
+
+
++ Vincent Kapelou is the nephew of Kronos President. _"ABILA, Kronos - letters claimed to be from guards of Kronos (POK) were received by Vincent Kapelou, minister of health and nephew of President Kapelou. "_ (from The Abila Post)
+
++ Mandor Vann from POK has potential relationship with APA, The Asterian people's Army as _"he spent much of his military career serving at the Kronosian embassies in Tethys and Asteria"_ (from 5 year report)
 
