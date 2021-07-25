@@ -8,17 +8,11 @@ url: {}
 date: 07-03-2021
 output:
   distill::distill_article:
-  self_contained: false
-  toc: true
-  toc_depth: 4
+    self_contained: false
+    toc: true
+    toc_float: true
 draft: FALSE
 ---
-```{r include=FALSE}
-def.chunk.hook  <- knitr::knit_hooks$get("chunk")
-knitr::knit_hooks$set(chunk = function(x, options) {
-  x <- def.chunk.hook(x, options)
-  ifelse(options$size != "normalsize", paste0("\n \\", options$size,"\n\n", x, "\n\n \\normalsize"), x)})
-```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE)
@@ -438,7 +432,9 @@ Filtering out documents with keyword "protest" and "rally". Keywords Juliana, co
 From the above, we can preliminarily draw conclusion that Homeland Illumination is more biased towards POK and Kronos Star is more inclined to the government. A comparison wordcloud and commonality wordcloud is plotted to further analyze the two primary news source.
 
 ![searching keywords against the primary sources](image/8.png)
+
 Comparison and Commonality wordcloud between the Homeland Illumination and Kronos Star
+
 ```{r comparison, echo=FALSE, message=FALSE, warning=FALSE}
 set.seed(2021)
 
@@ -759,7 +755,7 @@ employee_email_agg2 %>%
 
 + Looking at emails from Isia Vann, there are 6 emails sent to Rachel Pantanal and 2 replied from Rachel. Isia is 28 and Rachel is 30. And all of the emails are non work related, including weekend data invite, karaoke, gyro place, flowers. This suggest that they are having a romantic relationship. 
 
-```{r}
+```{r echo=FALSE}
 employee_email_agg2 %>%
   filter(Source %in% c("Isia.Vann", "Rachel.Pantanal"),
          Target %in% c("Isia.Vann", "Rachel.Pantanal")) %>%
