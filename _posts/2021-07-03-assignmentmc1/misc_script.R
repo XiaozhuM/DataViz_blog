@@ -632,4 +632,19 @@ employee_edges <- employee_email_agg %>%
 ```{r}
 email_graph <- tbl_graph(nodes=employee_nodes, node_key="id",edges=employee_edges)
 ```
-##---------
+##---------wordcloud facet----
+```{r}
+word_freq %>%
+  filter(n>1) %>%
+  filter(Source %in% c("All News Today", "Athena Speaks", "Central bulletin",
+                       "Centrum Sentinel")) %>%
+  ggplot(aes(label=Word, size=n))+
+  geom_text_wordcloud_area()+
+  scale_radius(range=c(0,20),limits=c(0, NA))+
+  theme_minimal()+
+  facet_wrap(~Source)
+```
+#--------
+
+
+
